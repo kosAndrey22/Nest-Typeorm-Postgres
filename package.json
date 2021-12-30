@@ -4,7 +4,7 @@
   "description": "Nest + Typeorm(Postgres) boilerplate",
   "author": "kosAndret",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "scripts": {
     "build:all": "concurrently \"yarn build:api\"",
     "start:api": "nest start api",
