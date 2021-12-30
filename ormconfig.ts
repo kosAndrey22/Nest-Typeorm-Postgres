@@ -1,10 +1,10 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { POSTGRES } from 'config';
 import * as Entities from '@libs/entities';
-// import * as Migrations from './migrations';
+import * as Migrations from './migrations';
 
 const entities = Object.values(Entities);
-// const migrations = Object.values(Migrations);
+const migrations = Object.values(Migrations);
 
 export = {
   type: 'postgres',
@@ -19,7 +19,7 @@ export = {
   entities,
   autoLoadModels: true,
   synchronize: true,
-  migrations: [],
+  migrations: migrations,
   logger: 'advanced-console',
   cli: {
     migrationsDir: 'migrations',

@@ -8,9 +8,9 @@
   "POSTGRES": {
     "HOST": "localhost",
     "USERNAME": "postgres",
-    "PASSWORD": "",
+    "PASSWORD": "root",
     "PORT": 5432,
-    "DB": "databasename",
+    "DB": "postgres",
     "RETRY_ATTEMPTS": 15,
     "RETRY_DELAY": 1000
   },

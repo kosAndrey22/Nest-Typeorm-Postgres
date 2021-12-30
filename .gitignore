@@ -105,3 +105,7 @@ dist
 
 # npm lock file
 package-lock.json
+
+
+local.json
+dump.rdb
