@@ -1,0 +1,17 @@
+version: '3.2'
+
+services:
+  postgres:
+    image: postgres:11.5-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=root
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
