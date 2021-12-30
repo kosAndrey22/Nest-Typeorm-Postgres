@@ -14,7 +14,20 @@
     "baseUrl": "./",
     "incremental": true,
     "allowSyntheticDefaultImports": true,
-    "paths": {}
+    "paths": {
+      "@libs/entites": [
+        "libs/entites/src"
+      ],
+      "@libs/entites/*": [
+        "libs/entites/src/*"
+      ],
+      "@libs/dtos": [
+        "libs/dtos/src"
+      ],
+      "@libs/dtos/*": [
+        "libs/dtos/src/*"
+      ]
+    }
   },
   "exclude": [
     "node_modules",

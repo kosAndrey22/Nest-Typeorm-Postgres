@@ -1,0 +1,47 @@
+{
+  "monorepo": true,
+  "root": "apps/nest-typeorm",
+  "sourceRoot": "apps/nest-typeorm/src",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/nest-typeorm/tsconfig.app.json"
+  },
+  "projects": {
+    "nest-typeorm": {
+      "type": "application",
+      "root": "apps/nest-typeorm",
+      "entryFile": "main",
+      "sourceRoot": "apps/nest-typeorm/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/nest-typeorm/tsconfig.app.json"
+      }
+    },
+    "api": {
+      "type": "application",
+      "root": "apps/api",
+      "entryFile": "main",
+      "sourceRoot": "apps/api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api/tsconfig.app.json"
+      }
+    },
+    "entites": {
+      "type": "library",
+      "root": "libs/entites",
+      "entryFile": "index",
+      "sourceRoot": "libs/entites/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/entites/tsconfig.lib.json"
+      }
+    },
+    "dtos": {
+      "type": "library",
+      "root": "libs/dtos",
+      "entryFile": "index",
+      "sourceRoot": "libs/dtos/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/dtos/tsconfig.lib.json"
+      }
+    }
+  }
+}
