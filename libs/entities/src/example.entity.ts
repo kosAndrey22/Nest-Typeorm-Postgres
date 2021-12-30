@@ -1,7 +1,7 @@
-import { BaseEntity } from "./base.entity";
-import { ApiProperty } from "@nestjs/swagger";
-import { Expose } from "class-transformer";
-import { Column, Entity } from "typeorm";
+import { ApiProperty } from '@nestjs/swagger';
+import { Expose } from 'class-transformer';
+import { Column, Entity } from 'typeorm';
+import { BaseEntity } from './base.entity';
 
 @Entity({ name: 'example' })
 export class ExampleEntity extends BaseEntity<ExampleEntity> {
