@@ -14,6 +14,7 @@
     "build:api": "nest build api",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "prepare": "husky install",
     "migrate:create": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:create -n",
     "migrate:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run",
     "migrate:revert": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:revert"
@@ -29,6 +30,7 @@
     "config": "^3.3.6",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "husky": "^7.0.4",
     "pg": "^8.7.1",
     "rxjs": "^7.5.1",
     "swagger-ui-express": "^4.3.0",
