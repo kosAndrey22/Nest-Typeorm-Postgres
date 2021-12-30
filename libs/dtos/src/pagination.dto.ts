@@ -9,26 +9,26 @@ export class PaginationParamsDTO {
   @IsInt()
   @Min(0)
   @Transform(({ value }) => (isNumberString(value) ? parseInt(value) : value))
-  skip?: number = 0;
+    skip?: number = 0;
 
   @ApiPropertyOptional()
   @IsInt()
   @Min(1)
   @Max(PAGINATION_MAX_LIMIT)
   @Transform(({ value }) => (isNumberString(value) ? parseInt(value) : value))
-  limit: number = PAGINATION_DEFAULT_LIMIT;
+    limit: number = PAGINATION_DEFAULT_LIMIT;
 }
 
 export class PaginationResponseDTO<T> extends ConstructableDTO<PaginationResponseDTO<T>> {
   @Expose()
   @ApiProperty()
-  skip: number;
+    skip: number;
 
   @Expose()
   @ApiProperty()
-  limit: number;
+    limit: number;
 
   @Expose()
   @ApiProperty()
-  count: number;
+    count: number;
 }

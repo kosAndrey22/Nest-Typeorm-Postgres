@@ -8,5 +8,5 @@ export class ExampleEntity extends BaseEntity<ExampleEntity> {
   @ApiProperty()
   @Expose()
   @Column()
-  data: string;
+    data: string;
 }
