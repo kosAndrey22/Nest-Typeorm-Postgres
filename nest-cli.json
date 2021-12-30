@@ -25,13 +25,13 @@
         "tsConfigPath": "apps/api/tsconfig.app.json"
       }
     },
-    "entites": {
+    "entities": {
       "type": "library",
-      "root": "libs/entites",
+      "root": "libs/entities",
       "entryFile": "index",
-      "sourceRoot": "libs/entites/src",
+      "sourceRoot": "libs/entities/src",
       "compilerOptions": {
-        "tsConfigPath": "libs/entites/tsconfig.lib.json"
+        "tsConfigPath": "libs/entities/tsconfig.lib.json"
       }
     },
     "dtos": {

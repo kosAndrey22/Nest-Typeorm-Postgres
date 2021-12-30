@@ -15,11 +15,11 @@
     "incremental": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@libs/entites": [
-        "libs/entites/src"
+      "@libs/entities": [
+        "libs/entities/src"
       ],
-      "@libs/entites/*": [
-        "libs/entites/src/*"
+      "@libs/entities/*": [
+        "libs/entities/src/*"
       ],
       "@libs/dtos": [
         "libs/dtos/src"
