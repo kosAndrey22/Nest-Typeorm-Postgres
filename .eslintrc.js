@@ -47,7 +47,15 @@ module.exports = {
     "key-spacing": ["error"],
     "keyword-spacing": ["error"],
     "require-await": ["error"],
-    "no-return-await": ["error"]
+    "no-return-await": ["error"],
+    "@typescript-eslint/ban-types": ["error",
+      {
+        "types": {
+          "Function": false,
+        },
+        "extendDefaults": true
+      }
+    ]
   },
   "overrides": [
     {

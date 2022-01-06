@@ -3,9 +3,14 @@ declare module 'config' {
   export const CORS: boolean;
   export const DEVELOPMENT: boolean;
 
-  export const SENTRY: {
-    readonly ENABLED: boolean;
-    readonly DSN: string;
+  export const COOKIES_OPTIONS: {
+    readonly SECURE: boolean;
+    readonly SAME_SITE: boolean | 'lax' | 'strict' | 'none';
+  };
+
+  export const JWT: {
+    readonly EXPIRATION: string | number;
+    readonly SECRET_KEY: string;
   };
 
   export const POSTGRES: {

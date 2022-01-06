@@ -34,11 +34,7 @@ async function bootstrap(): Promise<void> {
     }),
   );
   app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-      whitelist: true,
-      forbidUnknownValues: true,
-    }),
+    new ValidationPipe(),
   );
   const options = new DocumentBuilder()
     .setTitle(packageJson.name)

@@ -1,9 +1,13 @@
 {
   "CORS": true,
   "DEVELOPMENT": true,
-  "SENTRY": {
-    "ENABLED": false,
-    "DSN": ""
+  "COOKIES_OPTIONS": {
+    "SECURE": true,
+    "SAME_SITE": "none"
+  },
+  "JWT": {
+    "EXPIRATION": "5d",
+    "SECRET_KEY": "JWT_SECRET_KEY"
   },
   "POSTGRES": {
     "HOST": "localhost",

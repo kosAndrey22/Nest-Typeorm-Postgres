@@ -38,6 +38,12 @@
       ],
       "@libs/constants/*": [
         "libs/constants/src/*"
+      ],
+      "@libs/auth": [
+        "libs/auth/src"
+      ],
+      "@libs/auth/*": [
+        "libs/auth/src/*"
       ]
     }
   },
