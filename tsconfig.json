@@ -32,6 +32,12 @@
       ],
       "@libs/websocket/*": [
         "libs/websocket/src/*"
+      ],
+      "@libs/constants": [
+        "libs/constants/src"
+      ],
+      "@libs/constants/*": [
+        "libs/constants/src/*"
       ]
     }
   },

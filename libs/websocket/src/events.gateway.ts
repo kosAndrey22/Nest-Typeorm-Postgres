@@ -4,7 +4,7 @@ import {
 } from '@nestjs/websockets';
 import { Request, Response } from 'express';
 import { Server } from 'socket.io';
-import { GENERAL_EVENTS } from './constants';
+import { GENERAL_EVENTS } from '@libs/constants';
 
 @WebSocketGateway({
   handlePreflightRequest: (req: Request, res: Response): void => {
