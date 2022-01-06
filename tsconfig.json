@@ -26,6 +26,12 @@
       ],
       "@libs/dtos/*": [
         "libs/dtos/src/*"
+      ],
+      "@libs/websocket": [
+        "libs/websocket/src"
+      ],
+      "@libs/websocket/*": [
+        "libs/websocket/src/*"
       ]
     }
   },
