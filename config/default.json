@@ -2,18 +2,19 @@
   "CORS": true,
   "DEVELOPMENT": true,
   "COOKIES_OPTIONS": {
-    "SECURE": true,
     "SAME_SITE": "none"
   },
   "JWT": {
-    "EXPIRATION": "5d",
-    "SECRET_KEY": "JWT_SECRET_KEY"
+    "ACCESS_TOKEN_EXPIRATION": "30m",
+    "ACCESS_TOKEN_SECRET_KEY": "JWT_ACCESS_SECRET_KEY",
+    "REFRESH_TOKEN_EXPIRATION": "30d",
+    "REFRESH_TOKEN_SECRET_KEY": "JWT_REFRESH_SECRET_KEY"
   },
   "POSTGRES": {
     "HOST": "localhost",
     "USERNAME": "postgres",
     "PASSWORD": "root",
-    "PORT": 5432,
+    "PORT": 5433,
     "DB": "postgres",
     "RETRY_ATTEMPTS": 15,
     "RETRY_DELAY": 1000

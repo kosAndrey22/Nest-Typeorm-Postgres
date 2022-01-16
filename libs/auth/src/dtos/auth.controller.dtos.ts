@@ -3,6 +3,15 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 import { UserEntity } from '@libs/entities';
 import { MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH, PASSWORD_PATTERN } from '@libs/constants';
+import { ConstructableDTO } from '@libs/dtos';
+
+export class JwtAuthDTO extends ConstructableDTO<JwtAuthDTO> {
+  @ApiProperty()
+    accessToken: string;
+
+  @ApiProperty()
+    refreshToken: string;
+}
 
 export class SignInBodyDTO {
   @Expose()
@@ -14,15 +23,7 @@ export class SignInBodyDTO {
     password: string;
 }
 
-export class SignInResponseDTO {
-
-  @ApiProperty()
-    accessToken: string;
-
-  constructor(accessToken: string) {
-    this.accessToken = accessToken;
-  }
-}
+export class SignInResponseDTO extends JwtAuthDTO { }
 
 export class SignUpBodyDTO {
   @Expose()
@@ -34,13 +35,6 @@ export class SignUpBodyDTO {
     password: string;
 }
 
-export class SignUpResponseDTO {
-  @ApiProperty()
-    accessToken: string;
-
-  constructor(accessToken: string) {
-    this.accessToken = accessToken;
-  }
-}
+export class SignUpResponseDTO extends JwtAuthDTO { }
 
 export class MeResponseDTO extends UserEntity { }

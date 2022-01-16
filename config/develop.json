@@ -1,8 +1,4 @@
 {
   "CORS": true,
-  "DEVELOPMENT": true,
-  "SENTRY": {
-    "ENABLED": false,
-    "DSN": ""
-  }
+  "DEVELOPMENT": true
 }

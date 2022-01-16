@@ -1,5 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Res, Req, Get } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { Body, Controller, HttpCode, HttpStatus, Post, Res, Req, Get, UseGuards } from '@nestjs/common';
 import {
   ApiOkResponse,
   ApiTags,
@@ -7,10 +6,11 @@ import {
 import { COOKIES_OPTIONS } from 'config';
 
 import { Response } from 'express';
-import { COOKIE, COOKIE_EXPIRES, USER_ROLE } from '@libs/constants';
+import { COOKIE, ACCESS_COOKIE_EXPIRES, REFRESH_COOKIE_EXPIRES, USER_ROLE } from '@libs/constants';
 
 import { UserEntity } from '@libs/entities';
 import {
+  JwtAuthDTO,
   SignInBodyDTO,
   SignInResponseDTO,
   SignUpBodyDTO,
@@ -20,6 +20,7 @@ import {
 import { AuthService } from '../services/auth.service';
 import { Auth } from '../decorators/auth.decorator';
 import { RequestWithUser } from '../dtos/request.with.user.dto';
+import { JwtRefreshGuard } from '../guards/jwt-refresh.guard';
 
 const cookieSecureOptions = {
   httpOnly: true,
@@ -31,7 +32,6 @@ const cookieSecureOptions = {
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly jwtService: JwtService,
   ) {
   }
 
@@ -39,45 +39,61 @@ export class AuthController {
   @Auth(USER_ROLE.ADMIN, USER_ROLE.USER)
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: MeResponseDTO })
-  public async me(@Req() { user }: RequestWithUser): Promise<MeResponseDTO> {
-    return new MeResponseDTO(await this.authService.getMe(user.id));
+  public async me(@Req() req: RequestWithUser): Promise<MeResponseDTO> {
+    return new MeResponseDTO(await this.authService.getMe(req.user.id));
+  }
+
+  @Get('refresh')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtRefreshGuard)
+  refresh(@Req() { user }: RequestWithUser, @Res() res: Response): void {
+    const { id, role } = user;
+    const accessToken = this.authService.generateAccessToken({ id, role });
+
+    res.cookie(COOKIE.ACCESS_TOKEN, accessToken, { expires: ACCESS_COOKIE_EXPIRES(), ...cookieSecureOptions });
+    res.send();
   }
 
   @Post('sign-up')
+  @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({ type: SignUpResponseDTO })
   public async signUp(@Body() { login, password }: SignUpBodyDTO, @Res() res: Response): Promise<void> {
     await this.authService.signUp(login, password);
 
-    const accessToken = await this.authorize(res, { login, password });
+    const { accessToken, refreshToken } = await this.authenticate(res, { login, password });
 
-    res.send(new SignUpResponseDTO(accessToken));
+    res.send(new SignUpResponseDTO({ accessToken, refreshToken }));
   }
 
   @Post('sign-in')
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: SignInResponseDTO })
   public async signIn(@Body() { login, password }: SignInBodyDTO, @Res() res: Response): Promise<void> {
-    const accessToken = await this.authorize(res, { login, password });
+    const { accessToken, refreshToken } = await this.authenticate(res, { login, password });
 
-    res.send(new SignInResponseDTO(accessToken));
+    res.send(new SignInResponseDTO({ accessToken, refreshToken }));
   }
 
   @Post('sign-out')
   @HttpCode(HttpStatus.OK)
-  public signOut(@Res() res: Response): void {
+  public async signOut(@Req() { user: { id } }: RequestWithUser, @Res() res: Response): Promise<void> {
+    await this.authService.removeRefreshToken(id);
     res.clearCookie(COOKIE.ACCESS_TOKEN, cookieSecureOptions);
+    res.clearCookie(COOKIE.REFRESH_TOKEN, cookieSecureOptions);
     res.send();
   }
 
-  private async authorize(res: Response, { login, password }: Pick<UserEntity, 'login' | 'password'>): Promise<string> {
+  private async authenticate(res: Response, { login, password }: Pick<UserEntity, 'login' | 'password'>): Promise<JwtAuthDTO> {
     const { id, role } = await this.authService.signIn(login, password);
-    const accessToken = this.jwtService.sign({ id, role });
+    const accessToken = this.authService.generateAccessToken({ id, role });
+    const refreshToken = this.authService.generateRefreshToken({ id, role });
 
-    res.cookie(COOKIE.ACCESS_TOKEN, accessToken, {
-      expires: COOKIE_EXPIRES(),
-      ...cookieSecureOptions,
-    });
+    await this.authService.saveUserRefreshToken(refreshToken, id);
 
-    return accessToken;
+    res.cookie(COOKIE.ACCESS_TOKEN, accessToken, { expires: ACCESS_COOKIE_EXPIRES(), ...cookieSecureOptions });
+    res.cookie(COOKIE.REFRESH_TOKEN, refreshToken, { expires: REFRESH_COOKIE_EXPIRES(), ...cookieSecureOptions });
+
+    return { accessToken, refreshToken };
   }
 
 }

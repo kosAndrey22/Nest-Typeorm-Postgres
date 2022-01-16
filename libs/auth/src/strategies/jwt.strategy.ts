@@ -7,9 +7,13 @@ import { COOKIE } from '@libs/constants';
 import { JwtPayload } from '../dtos/jwt.payload.dto';
 
 import { UsersRepository } from '../repositories/users.repository';
+import { ACCESS_TOKEN_STRATEGY } from '../constants';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(
+  Strategy,
+  ACCESS_TOKEN_STRATEGY,
+) {
   constructor(private readonly userRepository: UsersRepository) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
@@ -28,7 +32,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         },
       ]),
       ignoreExpiration: false,
-      secretOrKey: JWT.SECRET_KEY,
+      secretOrKey: JWT.ACCESS_TOKEN_SECRET_KEY,
     });
   }
 
