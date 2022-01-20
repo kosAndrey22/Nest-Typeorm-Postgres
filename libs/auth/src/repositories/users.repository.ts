@@ -1,10 +1,9 @@
-import { EntityRepository, Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
+import { EntityRepository } from 'typeorm';
 import { UserEntity } from '@libs/entities';
+import { AbstractRepository } from '@libs/repositories';
 
-@Injectable()
 @EntityRepository(UserEntity)
-export class UsersRepository extends Repository<UserEntity> {
+export class UsersRepository extends AbstractRepository<UserEntity> {
 
   public getUser(conditions: Partial<UserEntity>, relations: string[] = []): Promise<UserEntity> {
     return this.findOne({ where: conditions, relations });

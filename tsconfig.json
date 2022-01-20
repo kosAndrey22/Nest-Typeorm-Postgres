@@ -44,6 +44,12 @@
       ],
       "@libs/auth/*": [
         "libs/auth/src/*"
+      ],
+      "@libs/repositories": [
+        "libs/repositories/src"
+      ],
+      "@libs/repositories/*": [
+        "libs/repositories/src/*"
       ]
     }
   },
