@@ -16,4 +16,4 @@ import { GeneralModule } from './general/general.module';
   controllers: [],
   providers: [],
 })
-export class AppModule { }
+export class ApiModule { }

@@ -6,51 +6,81 @@ import * as config from 'config';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import * as packageJson from '../../../package.json';
-import { AppModule } from './app.module';
+import { ApiModule } from './api.module';
 
-async function bootstrap(): Promise<void> {
-  const port = config.API.PORT;
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+class ApiBootstrapper {
 
-  if (config.CORS) {
-    const corsOptions = {
-      origin: (origin, callback): void => {
-        callback(null, true);
-      },
-      credentials: true,
-      methods: ['GET', 'PUT', 'POST', 'OPTIONS', 'DELETE', 'PATCH'],
-      headers: ['x-user', 'X-Signature', 'accept', 'content-type', 'authorization'],
-    };
-
-    app.use(cors(corsOptions));
-    app.use(cookieParser());
+  public static async bootstrap(): Promise<void> {
+    const api = await ApiBootstrapper.create();
+    ApiBootstrapper.setupCors(api);
+    ApiBootstrapper.setGlobalPrefix(api);
+    ApiBootstrapper.setupInterceptors(api);
+    ApiBootstrapper.setupPipes(api);
+    ApiBootstrapper.setupSwagger(api);
+    await ApiBootstrapper.launch(api);
   }
-  const apiPrefix = 'api/v1';
 
-  app.setGlobalPrefix(apiPrefix);
-  app.useGlobalInterceptors(
-    new ClassSerializerInterceptor(app.get(Reflector), {
-      excludeExtraneousValues: true,
-    }),
-  );
-  app.useGlobalPipes(
-    new ValidationPipe(),
-  );
-  const options = new DocumentBuilder()
-    .setTitle(packageJson.name)
-    .setDescription(packageJson.description)
-    .setVersion(packageJson.version)
-    .addBearerAuth()
-    .build();
-  const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('api', app, document, {
-    swaggerOptions: {
-      persistAuthorization: true,
-    },
-  });
+  private static async create(): Promise<NestExpressApplication> {
+    const api = await NestFactory.create<NestExpressApplication>(ApiModule);
+    return api;
+  }
 
-  await app.startAllMicroservices();
-  await app.listen(port);
+  private static setupCors(api: NestExpressApplication): void {
+    if (config.CORS) {
+      const corsOptions = {
+        origin: (origin, callback): void => {
+          callback(null, true);
+        },
+        credentials: true,
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+        headers: ['x-user', 'X-Signature', 'accept', 'content-type', 'authorization'],
+      };
+
+      api.use(cors(corsOptions));
+      api.use(cookieParser());
+    }
+  }
+
+  private static setGlobalPrefix(api: NestExpressApplication): void {
+    const apiPrefix = 'api/v1';
+    api.setGlobalPrefix(apiPrefix);
+  }
+
+  private static setupInterceptors(api: NestExpressApplication): void {
+    api.useGlobalInterceptors(
+      new ClassSerializerInterceptor(api.get(Reflector), {
+        excludeExtraneousValues: true,
+      }),
+    );
+  }
+
+  private static setupPipes(api: NestExpressApplication): void {
+    api.useGlobalPipes(
+      new ValidationPipe(),
+    );
+  }
+
+  private static setupSwagger(api: NestExpressApplication): void {
+    const options = new DocumentBuilder()
+      .setTitle(packageJson.name)
+      .setDescription(packageJson.description)
+      .setVersion(packageJson.version)
+      .addBearerAuth()
+      .build();
+    const document = SwaggerModule.createDocument(api, options);
+    SwaggerModule.setup('api', api, document, {
+      swaggerOptions: {
+        persistAuthorization: true,
+      },
+    });
+  }
+
+  private static async launch(api: NestExpressApplication): Promise<void> {
+    const port = config.API.PORT;
+    await api.startAllMicroservices();
+    await api.listen(port);
+  }
+
 }
 
-bootstrap();
+ApiBootstrapper.bootstrap();
