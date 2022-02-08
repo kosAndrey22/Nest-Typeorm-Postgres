@@ -7,20 +7,20 @@ import { ConstructableDTO } from '@libs/dtos';
 
 export class JwtAuthDTO extends ConstructableDTO<JwtAuthDTO> {
   @ApiProperty()
-    accessToken: string;
+  accessToken: string;
 
   @ApiProperty()
-    refreshToken: string;
+  refreshToken: string;
 }
 
 export class SignInBodyDTO {
   @Expose()
   @ApiProperty()
-    login: string;
+  login: string;
 
   @Expose()
   @ApiProperty({ minLength: MIN_PASSWORD_LENGTH, maxLength: MAX_PASSWORD_LENGTH, pattern: PASSWORD_PATTERN.toString() })
-    password: string;
+  password: string;
 }
 
 export class SignInResponseDTO extends JwtAuthDTO { }
@@ -28,11 +28,11 @@ export class SignInResponseDTO extends JwtAuthDTO { }
 export class SignUpBodyDTO {
   @Expose()
   @ApiProperty()
-    login: string;
+  login: string;
 
   @Expose()
   @ApiProperty({ minLength: MIN_PASSWORD_LENGTH, maxLength: MAX_PASSWORD_LENGTH, pattern: PASSWORD_PATTERN.toString() })
-    password: string;
+  password: string;
 }
 
 export class SignUpResponseDTO extends JwtAuthDTO { }

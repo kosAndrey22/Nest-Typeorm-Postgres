@@ -26,7 +26,18 @@ module.exports = {
     "brace-style": ["error", "1tbs"],
     "curly": ["error", "all"],
     "indent": "off",
-    "@typescript-eslint/indent": ["error", 2, { "ignoredNodes": ["TemplateLiteral > *"] }],
+    "@typescript-eslint/indent": [
+      "error",
+      2,
+      {
+        "ignoredNodes": [
+          "TemplateLiteral > *",
+          'FunctionExpression > .params[decorators.length > 0]',
+          'FunctionExpression > .params > :matches(Decorator, :not(:first-child))',
+          'ClassBody.body > PropertyDefinition[decorators.length > 0] > .key',
+        ],
+      },
+    ],
     'no-tabs': 2,
     'space-before-blocks': ['error'],
     'object-curly-spacing': ['error', 'always'],

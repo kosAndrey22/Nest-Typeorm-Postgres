@@ -9,18 +9,18 @@ export class UserEntity extends BaseEntity<UserEntity> {
   @ApiProperty()
   @Expose()
   @Column()
-    login: string;
+  login: string;
 
   @ApiProperty()
   @Column({ type: 'enum', enum: USER_ROLE })
   @Expose()
-    role: USER_ROLE;
+  role: USER_ROLE;
 
   @Exclude()
   @Column()
-    password: string;
+  password: string;
 
   @Exclude()
   @Column({ nullable: true })
-    refreshToken?: string;
+  refreshToken?: string;
 }

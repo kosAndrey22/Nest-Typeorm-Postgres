@@ -7,14 +7,14 @@ export class BaseEntity<T extends Record<string, any>> {
   @PrimaryGeneratedColumn()
   @ApiProperty()
   @Expose()
-    id: number;
+  id: number;
 
   @CreateDateColumn({ type: 'timestamptz' })
   @Expose()
-    createdAt: Date;
+  createdAt: Date;
 
   @UpdateDateColumn({ type: 'timestamptz' })
-    updatedAt: Date;
+  updatedAt: Date;
 
   constructor(object: Partial<T & BaseEntity<never>>) {
     Object.assign(this, plainToClass(this.constructor as ClassConstructor<T>, object, { excludeExtraneousValues: true }));

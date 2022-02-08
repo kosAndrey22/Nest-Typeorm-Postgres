@@ -37,10 +37,7 @@ export class AuthService {
   public async getUserIfRefreshTokenMatches(refreshToken: string, id: number): Promise<UserEntity | null> {
     const user = await this.getUserOrFail({ id });
 
-    const isRefreshTokenMatching = await compare(
-      refreshToken,
-      user.refreshToken,
-    );
+    const isRefreshTokenMatching = await compare(refreshToken, user.refreshToken);
 
     if (!isRefreshTokenMatching) {
       return null;
