@@ -46,7 +46,7 @@ export class AuthController {
   @Get('refresh')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtRefreshGuard)
-  refresh(@Req() { user }: RequestWithUser, @Res() res: Response): void {
+  public refresh(@Req() { user }: RequestWithUser, @Res() res: Response): void {
     const { id, role } = user;
     const accessToken = this.authService.generateAccessToken({ id, role });
 
