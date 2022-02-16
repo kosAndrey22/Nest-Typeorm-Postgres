@@ -5,3 +5,4 @@
 yarn lint
 yarn run audit
 yarn type-check
+yarn test
