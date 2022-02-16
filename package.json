@@ -78,7 +78,7 @@
   },
   "resolutions": {
     "engine.io": "6.1.1",
-    "follow-redirects": "1.14.7",
+    "follow-redirects": "1.14.8",
     "node-fetch": "2.6.7",
     "shelljs": "0.8.5"
   },
