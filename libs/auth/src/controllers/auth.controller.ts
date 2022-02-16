@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Res, Req, Get, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Res, Req, Get } from '@nestjs/common';
 import {
   ApiOkResponse,
   ApiTags,
@@ -19,8 +19,8 @@ import {
 } from '../dtos/auth.controller.dtos';
 import { AuthService } from '../services/auth.service';
 import { Auth } from '../decorators/auth.decorator';
+import { RefreshTokenAuthDecorator } from '../decorators/refresh.token.auth.decorator';
 import { RequestWithUser } from '../dtos/request.with.user.dto';
-import { JwtRefreshGuard } from '../guards/jwt-refresh.guard';
 
 const cookieSecureOptions = {
   httpOnly: true,
@@ -45,7 +45,7 @@ export class AuthController {
 
   @Get('refresh')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(JwtRefreshGuard)
+  @RefreshTokenAuthDecorator()
   public refresh(@Req() { user }: RequestWithUser, @Res() res: Response): void {
     const { id, role } = user;
     const accessToken = this.authService.generateAccessToken({ id, role });
@@ -75,6 +75,7 @@ export class AuthController {
   }
 
   @Post('sign-out')
+  @Auth(USER_ROLE.ADMIN, USER_ROLE.USER)
   @HttpCode(HttpStatus.OK)
   public async signOut(@Req() { user: { id } }: RequestWithUser, @Res() res: Response): Promise<void> {
     await this.authService.removeRefreshToken(id);

@@ -23,6 +23,7 @@ import * as Services from './services';
   ],
   exports: [
     JwtStrategy,
+    JwtRefreshStrategy,
   ],
 })
 export class AuthModule {

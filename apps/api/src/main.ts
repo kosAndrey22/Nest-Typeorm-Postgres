@@ -37,7 +37,6 @@ class ApiBootstrapper {
       };
 
       api.use(cors(corsOptions));
-      api.use(cookieParser());
     }
   }
 
@@ -77,6 +76,7 @@ class ApiBootstrapper {
 
   private static async launch(api: NestExpressApplication): Promise<void> {
     const port = config.API.PORT;
+    api.use(cookieParser());
     await api.startAllMicroservices();
     await api.listen(port);
   }
