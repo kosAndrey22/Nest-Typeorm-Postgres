@@ -17,11 +17,13 @@ describe('General', () => {
     await app.init();
   });
 
-  it(`/GET general`, () => {
-    return request(app.getHttpServer())
-      .get(`/general`)
-      .expect(200)
-      .expect({});
+  describe('GET general', () => {
+    it('Should OK', () => {
+      return request(app.getHttpServer())
+        .get('/general')
+        .expect(200)
+        .expect({});
+    })
   });
 
   afterAll(async () => {

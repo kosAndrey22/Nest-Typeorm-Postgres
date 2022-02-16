@@ -1,6 +1,6 @@
 {
   "POSTGRES": {
-    "DB": "postgres-test"
+    "DB": "postgres"
   },
   "NODE_ENV": "test"
 }
