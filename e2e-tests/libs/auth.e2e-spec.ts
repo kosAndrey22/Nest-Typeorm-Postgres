@@ -8,7 +8,7 @@ import { POSTGRES } from 'config';
 import { Server } from 'http';
 import { AuthModule } from '@libs/auth';
 import { MAX_PASSWORD_LENGTH, COOKIE, USER_ROLE } from '@libs/constants';
-import { UsersRepository } from '@libs/db';
+import { DbModule, TypeORMConfig, UsersRepository } from '@libs/db';
 
 describe('Auth', () => {
   let app: INestApplication;
@@ -35,9 +35,7 @@ describe('Auth', () => {
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AuthModule, TypeOrmModule.forRoot({
-        database: POSTGRES.DB
-      })],
+      imports: [AuthModule, DbModule, TypeOrmModule.forRoot(TypeORMConfig)],
     })
       .compile();
 

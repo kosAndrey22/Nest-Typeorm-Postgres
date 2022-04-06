@@ -1,12 +1,12 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { POSTGRES } from 'config';
-import * as Entities from '@libs/db';
+import * as Entities from './entities';
 import * as Migrations from './migrations';
 
 const entities = Object.values(Entities);
 const migrations = Object.values(Migrations);
 
-export = {
+export const TypeORMConfig = {
   type: 'postgres',
   host: POSTGRES.HOST,
   port: POSTGRES.PORT,
