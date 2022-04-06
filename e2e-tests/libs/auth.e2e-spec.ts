@@ -4,7 +4,6 @@ import cookieParser from 'cookie-parser';
 import request from 'supertest';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import assert from 'assert';
-import { POSTGRES } from 'config';
 import { Server } from 'http';
 import { AuthModule } from '@libs/auth';
 import { MAX_PASSWORD_LENGTH, COOKIE, USER_ROLE } from '@libs/constants';
