@@ -8,9 +8,8 @@ import {
   ERRORS,
   USER_ROLE,
 } from '@libs/constants';
-
+import { UsersRepository } from '@libs/repositories';
 import { compare, getHashByPassword, hashValue } from '../helpers/crypto.helper';
-import { UsersRepository } from '../repositories/users.repository';
 import { JwtPayload } from '../dtos/jwt.payload.dto';
 
 @Injectable()

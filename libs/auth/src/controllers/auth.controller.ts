@@ -4,10 +4,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { COOKIES_OPTIONS } from 'config';
-
 import { Response } from 'express';
 import { COOKIE, ACCESS_COOKIE_EXPIRES, REFRESH_COOKIE_EXPIRES, USER_ROLE } from '@libs/constants';
-
 import { UserEntity } from '@libs/entities';
 import {
   JwtAuthDTO,

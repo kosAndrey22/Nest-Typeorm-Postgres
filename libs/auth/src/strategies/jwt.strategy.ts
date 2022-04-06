@@ -4,9 +4,8 @@ import { JWT } from 'config';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Request } from 'express';
 import { COOKIE } from '@libs/constants';
+import { UsersRepository } from '@libs/repositories';
 import { JwtPayload } from '../dtos/jwt.payload.dto';
-
-import { UsersRepository } from '../repositories/users.repository';
 import { ACCESS_TOKEN_STRATEGY } from '../constants';
 
 @Injectable()
@@ -14,7 +13,7 @@ export class JwtStrategy extends PassportStrategy(
   Strategy,
   ACCESS_TOKEN_STRATEGY,
 ) {
-  constructor(private readonly userRepository: UsersRepository) {
+  constructor(private readonly usersRepository: UsersRepository) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (req: Request): string | null => {
@@ -37,7 +36,7 @@ export class JwtStrategy extends PassportStrategy(
   }
 
   public async validate(payload: JwtPayload): Promise<JwtPayload> {
-    const user = await this.userRepository.findOne({ where: { id: payload?.id } });
+    const user = await this.usersRepository.findOne({ where: { id: payload?.id } });
 
     if (!user) {
       throw new UnauthorizedException();

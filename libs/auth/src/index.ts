@@ -1,5 +1,5 @@
 export * from './auth.module';
-export * from './services/auth.service';
+export * from './services';
 
 export { Auth } from './decorators/auth.decorator';
 export { RequestWithUser } from './dtos/request.with.user.dto';

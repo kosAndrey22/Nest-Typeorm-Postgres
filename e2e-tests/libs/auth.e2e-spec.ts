@@ -1,21 +1,19 @@
 import { Test } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { AuthModule } from '@libs/auth';
-import { MAX_PASSWORD_LENGTH, COOKIE, USER_ROLE } from '@libs/constants';
 import cookieParser from 'cookie-parser';
 import request from 'supertest';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import assert from 'assert';
 import { POSTGRES } from 'config';
 import { Server } from 'http';
-import { UsersRepository } from '@libs/auth/repositories';
-
-
+import { AuthModule } from '@libs/auth';
+import { MAX_PASSWORD_LENGTH, COOKIE, USER_ROLE } from '@libs/constants';
+import { UsersRepository } from '@libs/repositories';
 
 describe('Auth', () => {
   let app: INestApplication;
   let server: Server;
-  let usersRepository: UsersRepository
+  let usersRepository: UsersRepository;
 
   const authPrefix = '/auth'
 
