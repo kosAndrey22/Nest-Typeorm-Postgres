@@ -4,7 +4,7 @@ import { JWT } from 'config';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Request } from 'express';
 import { COOKIE } from '@libs/constants';
-import { UsersRepository } from '@libs/repositories';
+import { UsersRepository } from '@libs/db';
 import { JwtPayload } from '../dtos/jwt.payload.dto';
 import { ACCESS_TOKEN_STRATEGY } from '../constants';
 

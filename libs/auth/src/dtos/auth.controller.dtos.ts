@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { Expose } from 'class-transformer';
 import { Matches, Length, IsDefined, IsString } from 'class-validator';
-import { UserEntity } from '@libs/entities';
+import { UserEntity } from '@libs/db';
 import { MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH, PASSWORD_PATTERN } from '@libs/constants';
 import { ConstructableDTO } from '@libs/dtos';
 

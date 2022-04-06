@@ -3,12 +3,11 @@ import { Injectable, BadRequestException, UnauthorizedException, NotFoundExcepti
 import { JWT } from 'config';
 import { JwtService } from '@nestjs/jwt';
 import { UpdateResult } from 'typeorm';
-import { UserEntity } from '@libs/entities';
 import {
   ERRORS,
   USER_ROLE,
 } from '@libs/constants';
-import { UsersRepository } from '@libs/repositories';
+import { UsersRepository, UserEntity } from '@libs/db';
 import { compare, getHashByPassword, hashValue } from '../helpers/crypto.helper';
 import { JwtPayload } from '../dtos/jwt.payload.dto';
 

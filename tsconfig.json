@@ -19,12 +19,6 @@
       "node"
     ],
     "paths": {
-      "@libs/entities": [
-        "libs/entities/src"
-      ],
-      "@libs/entities/*": [
-        "libs/entities/src/*"
-      ],
       "@libs/dtos": [
         "libs/dtos/src"
       ],
@@ -49,11 +43,11 @@
       "@libs/auth/*": [
         "libs/auth/src/*"
       ],
-      "@libs/repositories": [
-        "libs/repositories/src"
+      "@libs/db": [
+        "libs/db/src"
       ],
-      "@libs/repositories/*": [
-        "libs/repositories/src/*"
+      "@libs/db/*": [
+        "libs/db/src/*"
       ]
     }
   },

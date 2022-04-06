@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { BaseEntity } from '@libs/entities';
+import { BaseEntity } from '../entities';
 
 export class AbstractRepository<T extends BaseEntity<T>> extends Repository<T> {
 

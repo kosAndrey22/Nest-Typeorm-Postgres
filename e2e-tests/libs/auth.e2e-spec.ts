@@ -8,7 +8,7 @@ import { POSTGRES } from 'config';
 import { Server } from 'http';
 import { AuthModule } from '@libs/auth';
 import { MAX_PASSWORD_LENGTH, COOKIE, USER_ROLE } from '@libs/constants';
-import { UsersRepository } from '@libs/repositories';
+import { UsersRepository } from '@libs/db';
 
 describe('Auth', () => {
   let app: INestApplication;

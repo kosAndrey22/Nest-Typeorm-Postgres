@@ -102,12 +102,14 @@
       "@libs/constants": "<rootDir>/libs/constants/src",
       "@libs/dtos/(.*)": "<rootDir>/libs/dtos/src/$1",
       "@libs/dtos": "<rootDir>/libs/dtos/src",
-      "@libs/entities/(.*)": "<rootDir>/libs/entities/src/$1",
-      "@libs/entities": "<rootDir>/libs/entities/src",
-      "@libs/repositories/(.*)": "<rootDir>/libs/repositories/src/$1",
-      "@libs/repositories": "<rootDir>/libs/repositories/src",
       "@libs/websocket/(.*)": "<rootDir>/libs/websocket/src/$1",
-      "@libs/websocket": "<rootDir>/libs/websocket/src"
-    }
+      "@libs/websocket": "<rootDir>/libs/websocket/src",
+      "^@libs/db(|/.*)$": "<rootDir>/libs/db/src/$1"
+    },
+    "roots": [
+      "<rootDir>/apps/",
+      "<rootDir>/e2e-tests/",
+      "<rootDir>/libs/"
+    ]
   }
 }
