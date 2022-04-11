@@ -8,11 +8,12 @@ import { Server } from 'http';
 import { AuthModule } from '@libs/auth';
 import { MAX_PASSWORD_LENGTH, COOKIE, USER_ROLE } from '@libs/constants';
 import { DbModule, TypeORMConfig, UsersRepository } from '@libs/db';
+import { IUsersRepository } from '@libs/interfaces';
 
 describe('Auth', () => {
   let app: INestApplication;
   let server: Server;
-  let usersRepository: UsersRepository;
+  let usersRepository: IUsersRepository;
 
   const authPrefix = '/auth'
 

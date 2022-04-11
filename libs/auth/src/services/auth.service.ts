@@ -1,13 +1,13 @@
-import { Injectable, BadRequestException, UnauthorizedException, NotFoundException } from '@nestjs/common';
+import { Injectable, BadRequestException, UnauthorizedException, NotFoundException, Inject } from '@nestjs/common';
 
 import { JWT } from 'config';
 import { JwtService } from '@nestjs/jwt';
-import { UpdateResult } from 'typeorm';
 import {
   ERRORS,
   USER_ROLE,
 } from '@libs/constants';
 import { UsersRepository } from '@libs/db';
+import { IUsersRepository } from '@libs/interfaces';
 import { compare, getHashByPassword, hashValue } from '../helpers/crypto.helper';
 import { JwtPayload } from '../dtos/jwt.payload.dto';
 import { UserDTO } from '../dtos/auth.dtos';
@@ -17,7 +17,7 @@ export class AuthService {
 
   constructor(
     private readonly jwtService: JwtService,
-    private readonly usersRepository: UsersRepository,
+    @Inject(UsersRepository) private readonly usersRepository: IUsersRepository,
   ) {
   }
 
@@ -44,7 +44,7 @@ export class AuthService {
     return user;
   }
 
-  public removeRefreshToken(id: number): Promise<UpdateResult> {
+  public removeRefreshToken(id: number): Promise<any> {
     return this.usersRepository.update(id, {
       refreshToken: null,
     });

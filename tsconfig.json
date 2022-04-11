@@ -54,6 +54,12 @@
       ],
       "@libs/interfaces/*": [
         "libs/interfaces/src/*"
+      ],
+      "@libs/types": [
+        "libs/types/src"
+      ],
+      "@libs/types/*": [
+        "libs/types/src/*"
       ]
     }
   },
