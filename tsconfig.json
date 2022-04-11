@@ -48,6 +48,12 @@
       ],
       "@libs/db/*": [
         "libs/db/src/*"
+      ],
+      "@libs/interfaces": [
+        "libs/interfaces/src"
+      ],
+      "@libs/interfaces/*": [
+        "libs/interfaces/src/*"
       ]
     }
   },

@@ -7,9 +7,10 @@ import {
   ERRORS,
   USER_ROLE,
 } from '@libs/constants';
-import { UsersRepository, UserEntity } from '@libs/db';
+import { UsersRepository } from '@libs/db';
 import { compare, getHashByPassword, hashValue } from '../helpers/crypto.helper';
 import { JwtPayload } from '../dtos/jwt.payload.dto';
+import { UserDTO } from '../dtos/auth.dtos';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +21,7 @@ export class AuthService {
   ) {
   }
 
-  public getMe(id: number): Promise<UserEntity> {
+  public getMe(id: number): Promise<UserDTO> {
     return this.getUserOrFail({ id });
   }
 
@@ -32,7 +33,7 @@ export class AuthService {
     return this.jwtService.sign(payload, { secret: JWT.REFRESH_TOKEN_SECRET_KEY, expiresIn: JWT.REFRESH_TOKEN_EXPIRATION });
   }
 
-  public async getUserIfRefreshTokenMatches(refreshToken: string, id: number): Promise<UserEntity | null> {
+  public async getUserIfRefreshTokenMatches(refreshToken: string, id: number): Promise<UserDTO | null> {
     const user = await this.getUserOrFail({ id });
 
     const isRefreshTokenMatching = await compare(refreshToken, user.refreshToken);
@@ -56,7 +57,7 @@ export class AuthService {
     });
   }
 
-  public async signIn(login: string, password: string): Promise<UserEntity> {
+  public async signIn(login: string, password: string): Promise<UserDTO> {
     const user = await this.getUserOrFail({ login });
 
     const isPasswordCorrect = await compare(password, user.password);
@@ -80,7 +81,7 @@ export class AuthService {
     });
   }
 
-  private async getUserOrFail(conditions: Partial<UserEntity>, relations: string[] = []): Promise<UserEntity> {
+  private async getUserOrFail(conditions: Partial<UserDTO>, relations: string[] = []): Promise<UserDTO> {
     const user = await this.usersRepository.getUser(conditions, relations);
     if (!user) {
       throw new NotFoundException([{ field: '', message: ERRORS.USER_NOT_FOUND }]);

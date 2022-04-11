@@ -104,7 +104,8 @@
       "@libs/dtos": "<rootDir>/libs/dtos/src",
       "@libs/websocket/(.*)": "<rootDir>/libs/websocket/src/$1",
       "@libs/websocket": "<rootDir>/libs/websocket/src",
-      "^@libs/db(|/.*)$": "<rootDir>/libs/db/src/$1"
+      "^@libs/db(|/.*)$": "<rootDir>/libs/db/src/$1",
+      "^@libs/interfaces(|/.*)$": "<rootDir>/libs/interfaces/src/$1"
     },
     "roots": [
       "<rootDir>/apps/",

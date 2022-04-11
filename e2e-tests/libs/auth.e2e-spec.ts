@@ -161,6 +161,7 @@ describe('Auth', () => {
         role: USER_ROLE.USER,
         id: res.body.id,
         createdAt: res.body.createdAt,
+        updatedAt: res.body.updatedAt,
       })
     })
 

@@ -1,11 +1,10 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { ClassConstructor, Exclude, Expose, plainToClass } from 'class-transformer';
 import { CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { IBaseEntity } from '@libs/interfaces';
 
 @Exclude()
-export class BaseEntity<T extends Record<string, any>> {
+export class BaseEntity<T extends Record<string, any>> implements IBaseEntity {
   @PrimaryGeneratedColumn()
-  @ApiProperty()
   @Expose()
   id: number;
 
@@ -14,6 +13,7 @@ export class BaseEntity<T extends Record<string, any>> {
   createdAt: Date;
 
   @UpdateDateColumn({ type: 'timestamptz' })
+  @Expose()
   updatedAt: Date;
 
   constructor(object: Partial<T & BaseEntity<never>>) {

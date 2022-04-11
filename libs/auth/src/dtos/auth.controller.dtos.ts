@@ -2,9 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { Expose } from 'class-transformer';
 import { Matches, Length, IsDefined, IsString } from 'class-validator';
-import { UserEntity } from '@libs/db';
 import { MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH, PASSWORD_PATTERN } from '@libs/constants';
 import { ConstructableDTO } from '@libs/dtos';
+import { UserDTO } from './auth.dtos';
 
 export class JwtAuthDTO extends ConstructableDTO<JwtAuthDTO> {
   @ApiProperty()
@@ -48,4 +48,6 @@ export class SignUpBodyDTO {
 
 export class SignUpResponseDTO extends JwtAuthDTO { }
 
-export class MeResponseDTO extends UserEntity { }
+export class MeResponseDTO extends UserDTO {
+
+}

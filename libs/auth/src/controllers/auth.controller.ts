@@ -6,7 +6,7 @@ import {
 import { COOKIES_OPTIONS } from 'config';
 import { Response } from 'express';
 import { COOKIE, ACCESS_COOKIE_EXPIRES, REFRESH_COOKIE_EXPIRES, USER_ROLE } from '@libs/constants';
-import { UserEntity } from '@libs/db';
+import { IUserEntity } from '@libs/interfaces';
 import {
   JwtAuthDTO,
   SignInBodyDTO,
@@ -82,7 +82,7 @@ export class AuthController {
     res.send();
   }
 
-  private async authenticate(res: Response, { login, password }: Pick<UserEntity, 'login' | 'password'>): Promise<JwtAuthDTO> {
+  private async authenticate(res: Response, { login, password }: Pick<IUserEntity, 'login' | 'password'>): Promise<JwtAuthDTO> {
     const { id, role } = await this.authService.signIn(login, password);
     const accessToken = this.authService.generateAccessToken({ id, role });
     const refreshToken = this.authService.generateRefreshToken({ id, role });
