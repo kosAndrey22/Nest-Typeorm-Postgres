@@ -3,8 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { JWT } from 'config';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Request } from 'express';
-import { COOKIE } from '@libs/constants';
-import { UsersRepository } from '@libs/db';
+import { COOKIE, INJECT_TOKENS } from '@libs/constants';
 import { IUsersRepository } from '@libs/interfaces';
 import { JwtPayload } from '../dtos/jwt.payload.dto';
 import { ACCESS_TOKEN_STRATEGY } from '../constants';
@@ -15,7 +14,7 @@ export class JwtStrategy extends PassportStrategy(
   ACCESS_TOKEN_STRATEGY,
 ) {
   constructor(
-    @Inject(UsersRepository) private readonly usersRepository: IUsersRepository,
+    @Inject(INJECT_TOKENS.REPOSITORIES.USERS_REPOSITORY) private readonly usersRepository: IUsersRepository,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([

@@ -4,9 +4,9 @@ import { JWT } from 'config';
 import { JwtService } from '@nestjs/jwt';
 import {
   ERRORS,
+  INJECT_TOKENS,
   USER_ROLE,
 } from '@libs/constants';
-import { UsersRepository } from '@libs/db';
 import { IUsersRepository } from '@libs/interfaces';
 import { compare, getHashByPassword, hashValue } from '../helpers/crypto.helper';
 import { JwtPayload } from '../dtos/jwt.payload.dto';
@@ -17,7 +17,7 @@ export class AuthService {
 
   constructor(
     private readonly jwtService: JwtService,
-    @Inject(UsersRepository) private readonly usersRepository: IUsersRepository,
+    @Inject(INJECT_TOKENS.REPOSITORIES.USERS_REPOSITORY) private readonly usersRepository: IUsersRepository,
   ) {
   }
 
