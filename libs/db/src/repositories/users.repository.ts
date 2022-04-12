@@ -9,7 +9,7 @@ import { AbstractRepository } from './abstract.repository';
 export class UsersRepository extends AbstractRepository<UserEntity> implements IUsersRepository {
 
   constructor(
-    @InjectRepository(UserEntity) protected readonly driver: Repository<UserEntity>,
+    @InjectRepository(UserEntity) protected readonly connector: Repository<UserEntity>,
   ) {
     super();
   }
