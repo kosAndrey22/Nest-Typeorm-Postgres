@@ -16,13 +16,13 @@
         "tsConfigPath": "apps/nest-typeorm/tsconfig.app.json"
       }
     },
-    "api": {
+    "main": {
       "type": "application",
-      "root": "apps/api",
+      "root": "apps/main",
       "entryFile": "main",
-      "sourceRoot": "apps/api/src",
+      "sourceRoot": "apps/main/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/api/tsconfig.app.json"
+        "tsConfigPath": "apps/main/tsconfig.app.json"
       }
     },
     "dtos": {

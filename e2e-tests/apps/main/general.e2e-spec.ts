@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { GeneralModule } from '../../../apps/api/src/general/general.module';
+import { GeneralModule } from '../../../apps/main/src/general/general.module';
 
 
 describe('General', () => {

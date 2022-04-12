@@ -6,26 +6,26 @@ import * as config from 'config';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import * as packageJson from '../../../package.json';
-import { ApiModule } from './api.module';
+import { MainModule } from './main.module';
 
 class ApiBootstrapper {
 
   public static async bootstrap(): Promise<void> {
-    const api = await ApiBootstrapper.create();
-    ApiBootstrapper.setupCors(api);
-    ApiBootstrapper.setGlobalPrefix(api);
-    ApiBootstrapper.setupInterceptors(api);
-    ApiBootstrapper.setupPipes(api);
-    ApiBootstrapper.setupSwagger(api);
-    await ApiBootstrapper.launch(api);
+    const app = await ApiBootstrapper.create();
+    ApiBootstrapper.setupCors(app);
+    ApiBootstrapper.setGlobalPrefix(app);
+    ApiBootstrapper.setupInterceptors(app);
+    ApiBootstrapper.setupPipes(app);
+    ApiBootstrapper.setupSwagger(app);
+    await ApiBootstrapper.launch(app);
   }
 
   private static async create(): Promise<NestExpressApplication> {
-    const api = await NestFactory.create<NestExpressApplication>(ApiModule);
-    return api;
+    const app = await NestFactory.create<NestExpressApplication>(MainModule);
+    return app;
   }
 
-  private static setupCors(api: NestExpressApplication): void {
+  private static setupCors(app: NestExpressApplication): void {
     if (config.CORS) {
       const corsOptions = {
         origin: (origin, callback): void => {
@@ -36,49 +36,49 @@ class ApiBootstrapper {
         headers: ['x-user', 'X-Signature', 'accept', 'content-type', 'authorization'],
       };
 
-      api.use(cors(corsOptions));
+      app.use(cors(corsOptions));
     }
   }
 
-  private static setGlobalPrefix(api: NestExpressApplication): void {
-    const apiPrefix = 'api/v1';
-    api.setGlobalPrefix(apiPrefix);
+  private static setGlobalPrefix(app: NestExpressApplication): void {
+    const apiPrefix = 'app/v1';
+    app.setGlobalPrefix(apiPrefix);
   }
 
-  private static setupInterceptors(api: NestExpressApplication): void {
-    api.useGlobalInterceptors(
-      new ClassSerializerInterceptor(api.get(Reflector), {
+  private static setupInterceptors(app: NestExpressApplication): void {
+    app.useGlobalInterceptors(
+      new ClassSerializerInterceptor(app.get(Reflector), {
         excludeExtraneousValues: true,
       }),
     );
   }
 
-  private static setupPipes(api: NestExpressApplication): void {
-    api.useGlobalPipes(
+  private static setupPipes(app: NestExpressApplication): void {
+    app.useGlobalPipes(
       new ValidationPipe(),
     );
   }
 
-  private static setupSwagger(api: NestExpressApplication): void {
+  private static setupSwagger(app: NestExpressApplication): void {
     const options = new DocumentBuilder()
       .setTitle(packageJson.name)
       .setDescription(packageJson.description)
       .setVersion(packageJson.version)
       .addBearerAuth()
       .build();
-    const document = SwaggerModule.createDocument(api, options);
-    SwaggerModule.setup('api', api, document, {
+    const document = SwaggerModule.createDocument(app, options);
+    SwaggerModule.setup('app', app, document, {
       swaggerOptions: {
         persistAuthorization: true,
       },
     });
   }
 
-  private static async launch(api: NestExpressApplication): Promise<void> {
+  private static async launch(app: NestExpressApplication): Promise<void> {
     const port = config.API.PORT;
-    api.use(cookieParser());
-    await api.startAllMicroservices();
-    await api.listen(port);
+    app.use(cookieParser());
+    await app.startAllMicroservices();
+    await app.listen(port);
   }
 
 }
