@@ -5,9 +5,9 @@ import request from 'supertest';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import assert from 'assert';
 import { Server } from 'http';
-import { AuthModule } from '@libs/auth';
+import { AuthLibModule } from '@libs/auth';
 import { MAX_PASSWORD_LENGTH, COOKIE, USER_ROLE, INJECT_TOKENS } from '@libs/constants';
-import { DbModule, TypeORMConfig } from '@libs/db';
+import { DbLibModule, TypeORMConfig } from '@libs/db';
 import { IUsersRepository } from '@libs/interfaces';
 
 describe('Auth', () => {
@@ -35,7 +35,7 @@ describe('Auth', () => {
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AuthModule, DbModule, TypeOrmModule.forRoot(TypeORMConfig)],
+      imports: [AuthLibModule, DbLibModule, TypeOrmModule.forRoot(TypeORMConfig)],
     })
       .compile();
 

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { JWT } from 'config';
-import { DbModule } from '@libs/db';
+import { DbLibModule } from '@libs/db';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
 import * as Controllers from './controllers';
@@ -9,7 +9,7 @@ import * as Services from './services';
 
 @Module({
   imports: [
-    DbModule,
+    DbLibModule,
     JwtModule.register({
       secret: JWT.ACCESS_TOKEN_SECRET_KEY,
     }),
@@ -25,5 +25,5 @@ import * as Services from './services';
     JwtRefreshStrategy,
   ],
 })
-export class AuthModule {
+export class AuthLibModule {
 }

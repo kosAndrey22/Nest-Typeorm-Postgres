@@ -19,4 +19,4 @@ import { UsersRepository } from './repositories';
     INJECT_TOKENS.REPOSITORIES.USERS_REPOSITORY,
   ],
 })
-export class DbModule { }
+export class DbLibModule { }

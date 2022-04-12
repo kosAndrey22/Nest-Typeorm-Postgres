@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { WebsocketModule } from '@libs/websocket';
+import { WebsocketLibModule } from '@libs/websocket';
 import * as Controllers from './controllers';
 import * as Services from './services';
 
 @Module({
   imports: [
-    WebsocketModule,
+    WebsocketLibModule,
   ],
   controllers: Object.values(Controllers),
   providers: Object.values(Services),
