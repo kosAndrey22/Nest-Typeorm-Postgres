@@ -3,8 +3,6 @@ import { IAbstractRepository } from '@libs/interfaces';
 import { DeepPartial } from '@libs/types';
 import { BaseEntity } from '../entities';
 
-// TODO: remove any
-// TODO: simplify connector.manager.connection.driver
 export abstract class AbstractRepository<Entity extends BaseEntity<Entity>> implements IAbstractRepository<Entity> {
 
   protected abstract readonly connector: Repository<Entity>;
