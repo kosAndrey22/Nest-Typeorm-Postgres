@@ -4,9 +4,9 @@ import { JWT } from 'config';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Request } from 'express';
 import { COOKIE, INJECT_TOKENS } from '@libs/constants';
-import { IUsersRepository } from '@libs/interfaces';
-import { JwtPayload } from '../dtos/jwt.payload.dto';
+import { JwtPayload } from '../dtos';
 import { ACCESS_TOKEN_STRATEGY } from '../constants';
+import { IAuthRepository } from '../interfaces';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(
@@ -14,7 +14,7 @@ export class JwtStrategy extends PassportStrategy(
   ACCESS_TOKEN_STRATEGY,
 ) {
   constructor(
-    @Inject(INJECT_TOKENS.REPOSITORIES.USERS_REPOSITORY) private readonly usersRepository: IUsersRepository,
+    @Inject(INJECT_TOKENS.REPOSITORIES.USERS_REPOSITORY) private readonly usersRepository: IAuthRepository,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([

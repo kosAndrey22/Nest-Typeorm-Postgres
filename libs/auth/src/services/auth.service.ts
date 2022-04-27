@@ -7,17 +7,16 @@ import {
   INJECT_TOKENS,
   USER_ROLE,
 } from '@libs/constants';
-import { IUsersRepository } from '@libs/interfaces';
-import { compare, getHashByPassword, hashValue } from '../helpers/crypto.helper';
-import { JwtPayload } from '../dtos/jwt.payload.dto';
-import { UserDTO } from '../dtos/auth.dtos';
+import { compare, getHashByPassword, hashValue } from '../helpers';
+import { JwtPayload, UserDTO } from '../dtos';
+import { IAuthRepository } from '../interfaces';
 
 @Injectable()
 export class AuthService {
 
   constructor(
     private readonly jwtService: JwtService,
-    @Inject(INJECT_TOKENS.REPOSITORIES.USERS_REPOSITORY) private readonly usersRepository: IUsersRepository,
+    @Inject(INJECT_TOKENS.REPOSITORIES.USERS_REPOSITORY) private readonly usersRepository: IAuthRepository,
   ) {
   }
 

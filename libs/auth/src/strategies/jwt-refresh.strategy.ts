@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { JWT } from 'config';
 import { Request } from 'express';
 import { COOKIE } from '@libs/constants';
-import { JwtPayload } from '../dtos/jwt.payload.dto';
+import { JwtPayload } from '../dtos';
 import { AuthService } from '../services';
 import { REFRESH_TOKEN_STRATEGY } from '../constants';
 

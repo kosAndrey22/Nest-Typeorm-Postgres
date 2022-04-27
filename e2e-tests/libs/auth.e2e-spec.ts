@@ -5,15 +5,14 @@ import request from 'supertest';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import assert from 'assert';
 import { Server } from 'http';
-import { AuthLibModule } from '@libs/auth';
+import { AuthLibModule, IAuthRepository } from '@libs/auth';
 import { MAX_PASSWORD_LENGTH, COOKIE, USER_ROLE, INJECT_TOKENS } from '@libs/constants';
 import { DbLibModule, TypeORMConfig } from '@libs/db';
-import { IUsersRepository } from '@libs/interfaces';
 
 describe('Auth', () => {
   let app: INestApplication;
   let server: Server;
-  let usersRepository: IUsersRepository;
+  let usersRepository: IAuthRepository;
 
   const authPrefix = '/auth'
 

@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { IUsersRepository } from '@libs/interfaces';
+import { IAuthRepository } from '@libs/auth';
 import { UserEntity } from '../entities';
 import { AbstractRepository } from './abstract.repository';
 
 @Injectable()
-export class UsersRepository extends AbstractRepository<UserEntity> implements IUsersRepository {
+export class UsersRepository extends AbstractRepository<UserEntity> implements IAuthRepository {
 
   constructor(
     @InjectRepository(UserEntity) protected readonly connector: Repository<UserEntity>,

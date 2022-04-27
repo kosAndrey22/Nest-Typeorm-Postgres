@@ -14,11 +14,10 @@ import {
   SignUpBodyDTO,
   SignUpResponseDTO,
   MeResponseDTO,
-} from '../dtos/auth.controller.dtos';
-import { AuthService } from '../services/auth.service';
-import { Auth } from '../decorators/auth.decorator';
-import { RefreshTokenAuthDecorator } from '../decorators/refresh.token.auth.decorator';
-import { RequestWithUser } from '../dtos/request.with.user.dto';
+  RequestWithUser,
+} from '../dtos';
+import { AuthService } from '../services';
+import { Auth, RefreshTokenAuthDecorator } from '../decorators';
 
 const cookieSecureOptions = {
   httpOnly: true,
