@@ -12,11 +12,11 @@ import { UsersRepository } from './repositories';
     TypeOrmModule.forFeature([UserEntity]),
   ],
   providers: [{
-    provide: INJECT_TOKENS.REPOSITORIES.USERS_REPOSITORY,
+    provide: INJECT_TOKENS.REPOSITORIES.AUTH_REPOSITORY,
     useClass: UsersRepository,
   }],
   exports: [
-    INJECT_TOKENS.REPOSITORIES.USERS_REPOSITORY,
+    INJECT_TOKENS.REPOSITORIES.AUTH_REPOSITORY,
   ],
 })
 export class DbLibModule { }

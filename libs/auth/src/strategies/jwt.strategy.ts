@@ -14,7 +14,7 @@ export class JwtStrategy extends PassportStrategy(
   ACCESS_TOKEN_STRATEGY,
 ) {
   constructor(
-    @Inject(INJECT_TOKENS.REPOSITORIES.USERS_REPOSITORY) private readonly usersRepository: IAuthRepository,
+    @Inject(INJECT_TOKENS.REPOSITORIES.AUTH_REPOSITORY) private readonly authRepository: IAuthRepository,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
@@ -38,7 +38,7 @@ export class JwtStrategy extends PassportStrategy(
   }
 
   public async validate(payload: JwtPayload): Promise<JwtPayload> {
-    const user = await this.usersRepository.findOne({ id: payload?.id });
+    const user = await this.authRepository.findOne({ id: payload?.id });
 
     if (!user) {
       throw new UnauthorizedException();

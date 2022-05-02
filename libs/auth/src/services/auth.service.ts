@@ -16,7 +16,7 @@ export class AuthService {
 
   constructor(
     private readonly jwtService: JwtService,
-    @Inject(INJECT_TOKENS.REPOSITORIES.USERS_REPOSITORY) private readonly usersRepository: IAuthRepository,
+    @Inject(INJECT_TOKENS.REPOSITORIES.AUTH_REPOSITORY) private readonly authRepository: IAuthRepository,
   ) {
   }
 
@@ -44,14 +44,14 @@ export class AuthService {
   }
 
   public removeRefreshToken(id: number): Promise<any> {
-    return this.usersRepository.update(id, {
+    return this.authRepository.update(id, {
       refreshToken: null,
     });
   }
 
   public async saveUserRefreshToken(refreshToken: string, userId: number): Promise<void> {
     const hashedToken = await hashValue(refreshToken, 10);
-    await this.usersRepository.update({ id: userId }, {
+    await this.authRepository.update({ id: userId }, {
       refreshToken: hashedToken,
     });
   }
@@ -68,12 +68,12 @@ export class AuthService {
   }
 
   public async signUp(login: string, password: string): Promise<void> {
-    const userByLogin = await this.usersRepository.getUser({ login });
+    const userByLogin = await this.authRepository.getUser({ login });
     if (userByLogin) {
       throw new BadRequestException([{ field: 'login', message: ERRORS.LOGIN_ALREADY_IN_USE }]);
     }
     const passwordHash = await getHashByPassword(password);
-    await this.usersRepository.save({
+    await this.authRepository.save({
       login,
       role: USER_ROLE.USER,
       password: passwordHash,
@@ -81,7 +81,7 @@ export class AuthService {
   }
 
   private async getUserOrFail(conditions: Partial<UserDTO>, relations: string[] = []): Promise<UserDTO> {
-    const user = await this.usersRepository.getUser(conditions, relations);
+    const user = await this.authRepository.getUser(conditions, relations);
     if (!user) {
       throw new NotFoundException([{ field: '', message: ERRORS.USER_NOT_FOUND }]);
     }

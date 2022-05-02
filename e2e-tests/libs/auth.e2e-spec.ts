@@ -12,7 +12,7 @@ import { DbLibModule, TypeORMConfig } from '@libs/db';
 describe('Auth', () => {
   let app: INestApplication;
   let server: Server;
-  let usersRepository: IAuthRepository;
+  let authRepository: IAuthRepository;
 
   const authPrefix = '/auth'
 
@@ -46,7 +46,7 @@ describe('Auth', () => {
     await app.init();
 
     server = app.getHttpServer();
-    usersRepository = app.get(INJECT_TOKENS.REPOSITORIES.USERS_REPOSITORY);
+    authRepository = app.get(INJECT_TOKENS.REPOSITORIES.AUTH_REPOSITORY);
   });
 
   describe('POST sign-up', () => {
@@ -187,7 +187,7 @@ describe('Auth', () => {
   })
 
   afterAll(async () => {
-    await usersRepository.delete({ login: userName });
+    await authRepository.delete({ login: userName });
     await app.close();
   });
 
