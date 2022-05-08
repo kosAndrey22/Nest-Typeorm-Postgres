@@ -2,9 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
 import { USER_ROLE } from '@libs/constants';
 import { IUserEntity } from '@libs/interfaces';
-import { ConstructableDTO } from '@libs/dtos';
+import { BaseEntityConstructableDTO } from '@libs/dtos';
 
-export class UserDTO extends ConstructableDTO<UserDTO> implements IUserEntity {
+export class UserDTO extends BaseEntityConstructableDTO<UserDTO> implements IUserEntity {
   @Expose()
   @ApiProperty()
   id: number;

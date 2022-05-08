@@ -41,7 +41,7 @@ class ApiBootstrapper {
   }
 
   private static setGlobalPrefix(app: NestExpressApplication): void {
-    const apiPrefix = 'app/v1';
+    const apiPrefix = 'api/v1';
     app.setGlobalPrefix(apiPrefix);
   }
 
