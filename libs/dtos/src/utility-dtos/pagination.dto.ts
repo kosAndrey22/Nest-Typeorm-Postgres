@@ -2,21 +2,23 @@ import { IsInt, isNumberString, Max, Min } from 'class-validator';
 import { Transform, Expose } from 'class-transformer';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { IPagination, IPaginationResponse } from '@libs/interfaces';
-import { PAGINATION_DEFAULT_LIMIT, PAGINATION_MAX_LIMIT } from '../constants';
+import { PAGINATION_DEFAULT_LIMIT, PAGINATION_MAX_LIMIT, PAGINATION_DEFAULT_SKIP } from '../constants';
 import { ConstructableDTO } from './constructable.dto';
 
 export class PaginationParamsDTO implements IPagination {
-  @ApiPropertyOptional()
+  @Expose()
+  @ApiPropertyOptional({ default: PAGINATION_DEFAULT_SKIP })
   @IsInt()
   @Min(0)
-  @Transform(({ value }) => (isNumberString(value) ? parseInt(value) : value))
-  skip?: number = 0;
+  @Transform(({ value }) => ((isNumberString(value) ? parseInt(value) : value) || PAGINATION_DEFAULT_SKIP))
+  skip: number = PAGINATION_DEFAULT_SKIP;
 
-  @ApiPropertyOptional()
+  @Expose()
+  @ApiPropertyOptional({ default: PAGINATION_DEFAULT_SKIP })
   @IsInt()
   @Min(1)
   @Max(PAGINATION_MAX_LIMIT)
-  @Transform(({ value }) => (isNumberString(value) ? parseInt(value) : value))
+  @Transform(({ value }) => ((isNumberString(value) ? parseInt(value) : value) || PAGINATION_DEFAULT_LIMIT))
   limit: number = PAGINATION_DEFAULT_LIMIT;
 }
 

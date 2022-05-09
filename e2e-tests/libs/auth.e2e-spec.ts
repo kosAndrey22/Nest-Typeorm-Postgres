@@ -39,7 +39,7 @@ describe('Auth', () => {
 
     app = moduleRef.createNestApplication();
     app.useGlobalPipes(
-      new ValidationPipe(),
+      new ValidationPipe({ transform: true }),
     );
     app.use(cookieParser());
     await app.init();
@@ -154,13 +154,14 @@ describe('Auth', () => {
       const res = await request(server)
         .get(`${authPrefix}/me`)
         .set(COOKIE.ACCESS_TOKEN, accessToken)
-        .expect(200)
-      assert.deepEqual(res.body, {
+        .expect(200);
+      const { body } = res
+      assert.deepEqual(body, {
         login: userName,
         role: USER_ROLE.USER,
-        id: res.body.id,
-        createdAt: res.body.createdAt,
-        updatedAt: res.body.updatedAt,
+        id: body.id,
+        createdAt: body.createdAt,
+        updatedAt: body.updatedAt,
       })
     })
 

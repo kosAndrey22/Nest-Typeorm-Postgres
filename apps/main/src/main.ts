@@ -55,7 +55,7 @@ class ApiBootstrapper {
 
   private static setupPipes(app: NestExpressApplication): void {
     app.useGlobalPipes(
-      new ValidationPipe(),
+      new ValidationPipe({ transform: true }),
     );
   }
 
