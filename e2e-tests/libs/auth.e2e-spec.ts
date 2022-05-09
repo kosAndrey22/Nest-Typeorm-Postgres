@@ -1,13 +1,12 @@
-import { Test } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { Test } from '@nestjs/testing';
+import assert from 'assert';
 import cookieParser from 'cookie-parser';
 import request from 'supertest';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import assert from 'assert';
 import { Server } from 'http';
 import { AuthLibModule, IAuthRepository } from '@libs/auth';
 import { MAX_PASSWORD_LENGTH, COOKIE, USER_ROLE, INJECT_TOKENS } from '@libs/constants';
-import { DbLibModule, TypeORMConfig } from '@libs/db';
+import { DbLibModule } from '@libs/db';
 
 describe('Auth', () => {
   let app: INestApplication;
@@ -34,7 +33,7 @@ describe('Auth', () => {
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AuthLibModule, DbLibModule, TypeOrmModule.forRoot(TypeORMConfig)],
+      imports: [AuthLibModule, DbLibModule],
     })
       .compile();
 
