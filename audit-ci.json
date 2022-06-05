@@ -1,4 +1,4 @@
 {
-  "allowlist": [],
+  "allowlist": ["dicer"],
   "high": true
 }

@@ -18,6 +18,7 @@ import {
 } from '../dtos';
 import { AuthService } from '../services';
 import { Auth, RefreshTokenAuthDecorator } from '../decorators';
+import { AUTH_CONTROLLER_PREFIX, ROUTES } from '../constants';
 
 const cookieSecureOptions = {
   httpOnly: true,
@@ -25,14 +26,14 @@ const cookieSecureOptions = {
 };
 
 @ApiTags('auth')
-@Controller('auth')
+@Controller(AUTH_CONTROLLER_PREFIX)
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
   ) {
   }
 
-  @Get('me')
+  @Get(ROUTES.GET_ME)
   @Auth(USER_ROLE.ADMIN, USER_ROLE.USER)
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: MeResponseDTO })
@@ -40,7 +41,7 @@ export class AuthController {
     return new MeResponseDTO(await this.authService.getMe(req.user.id));
   }
 
-  @Get('refresh')
+  @Get(ROUTES.REFRESH_TOKEN)
   @HttpCode(HttpStatus.OK)
   @RefreshTokenAuthDecorator()
   public refresh(@Req() { user }: RequestWithUser, @Res() res: Response): void {
@@ -51,7 +52,7 @@ export class AuthController {
     res.send();
   }
 
-  @Post('sign-up')
+  @Post(ROUTES.SIGN_UP)
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: SignUpResponseDTO })
   public async signUp(@Body() { login, password }: SignUpBodyDTO, @Res() res: Response): Promise<void> {
@@ -62,7 +63,7 @@ export class AuthController {
     res.send(new SignUpResponseDTO({ accessToken, refreshToken }));
   }
 
-  @Post('sign-in')
+  @Post(ROUTES.SIGN_IN)
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: SignInResponseDTO })
   public async signIn(@Body() { login, password }: SignInBodyDTO, @Res() res: Response): Promise<void> {
@@ -71,7 +72,7 @@ export class AuthController {
     res.send(new SignInResponseDTO({ accessToken, refreshToken }));
   }
 
-  @Post('sign-out')
+  @Post(ROUTES.SIGN_OUT)
   @Auth(USER_ROLE.ADMIN, USER_ROLE.USER)
   @HttpCode(HttpStatus.OK)
   public async signOut(@Req() { user: { id } }: RequestWithUser, @Res() res: Response): Promise<void> {
