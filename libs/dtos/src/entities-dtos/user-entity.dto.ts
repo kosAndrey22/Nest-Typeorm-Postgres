@@ -1,8 +1,8 @@
-import { USER_ROLE } from "@libs/constants";
-import { IUserEntity } from "@libs/interfaces";
-import { ApiProperty } from "@nestjs/swagger";
-import { Exclude, Expose } from "class-transformer";
-import { BaseEntityDTO } from "./base-entity.dto";
+import { ApiProperty } from '@nestjs/swagger';
+import { Exclude, Expose } from 'class-transformer';
+import { USER_ROLE } from '@libs/constants';
+import { IUserEntity } from '@libs/interfaces';
+import { BaseEntityDTO } from './base-entity.dto';
 
 export class UserEntityDTO extends BaseEntityDTO<UserEntityDTO> implements IUserEntity {
   @Expose()
