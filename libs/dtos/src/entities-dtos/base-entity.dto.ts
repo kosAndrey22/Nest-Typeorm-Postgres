@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
+import { IBaseEntity } from '@libs/interfaces';
 import { ConstructableDTO } from '../utility-dtos';
 
-export class BaseEntityConstructableDTO<T> extends ConstructableDTO<BaseEntityConstructableDTO<T>> {
+export class BaseEntityDTO<T extends Record<string, any>> extends ConstructableDTO<BaseEntityDTO<T>> implements IBaseEntity {
   @Expose()
   @ApiProperty()
   id: number;
@@ -14,5 +15,4 @@ export class BaseEntityConstructableDTO<T> extends ConstructableDTO<BaseEntityCo
   @Expose()
   @ApiProperty()
   updatedAt: Date;
-
 }

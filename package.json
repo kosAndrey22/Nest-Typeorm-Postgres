@@ -7,11 +7,11 @@
   "private": true,
   "scripts": {
     "build:all": "concurrently \"yarn build:main\"",
+    "build:main": "nest build main",
     "start:main": "nest start main",
     "start:main:dev": "nest start main --watch",
     "start:main:debug": "nest start main --debug --watch",
     "start:main:prod": "node dist/apps/main/main",
-    "build:main": "nest build main",
     "prepare": "husky install",
     "audit": "audit-ci --config audit-ci.json",
     "type-check": "tsc --pretty --noEmit",

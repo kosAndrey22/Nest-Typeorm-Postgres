@@ -3,7 +3,7 @@ import { IAbstractRepository } from '@libs/interfaces';
 import { DeepPartial } from '@libs/types';
 import { BaseEntity } from '../entities';
 
-export abstract class AbstractRepository<Entity extends BaseEntity<Entity>> implements IAbstractRepository<Entity> {
+export abstract class AbstractRepository<Entity extends BaseEntity> implements IAbstractRepository<Entity> {
 
   protected abstract readonly connector: Repository<Entity>;
 

@@ -5,7 +5,7 @@ import { IUserEntity } from '@libs/interfaces';
 import { BaseEntity } from './base.entity';
 
 @Entity({ name: 'user_test' })
-export class UserEntity extends BaseEntity<UserEntity> implements IUserEntity {
+export class UserEntity extends BaseEntity implements IUserEntity {
   @Expose()
   @Column()
   login: string;

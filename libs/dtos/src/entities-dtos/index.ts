@@ -1,1 +1,2 @@
-export * from './base-entity-constructable.dto';
+export * from './base-entity.dto';
+export * from './user-entity.dto';
