@@ -16,13 +16,13 @@
         "tsConfigPath": "apps/nest-typeorm/tsconfig.app.json"
       }
     },
-    "main": {
+    "api": {
       "type": "application",
-      "root": "apps/main",
+      "root": "apps/api",
       "entryFile": "main",
-      "sourceRoot": "apps/main/src",
+      "sourceRoot": "apps/api/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/main/tsconfig.app.json"
+        "tsConfigPath": "apps/api/tsconfig.app.json"
       }
     },
     "dtos": {
@@ -86,6 +86,15 @@
       "sourceRoot": "libs/types/src",
       "compilerOptions": {
         "tsConfigPath": "libs/types/tsconfig.lib.json"
+      }
+    },
+    "entities": {
+      "type": "library",
+      "root": "libs/entities",
+      "entryFile": "index",
+      "sourceRoot": "libs/entities/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/entities/tsconfig.lib.json"
       }
     }
   }

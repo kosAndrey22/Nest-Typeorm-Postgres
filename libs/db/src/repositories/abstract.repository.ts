@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm';
 import { IAbstractRepository } from '@libs/interfaces';
 import { DeepPartial } from '@libs/types';
-import { BaseEntity } from '../entities';
+import { BaseEntity } from '@libs/entities';
 
 export abstract class AbstractRepository<Entity extends BaseEntity> implements IAbstractRepository<Entity> {
 

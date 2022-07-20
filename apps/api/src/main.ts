@@ -6,7 +6,7 @@ import * as config from 'config';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import * as packageJson from '../../../package.json';
-import { MainModule } from './main.module';
+import { ApiModule } from './api.module';
 
 class ApiBootstrapper {
 
@@ -21,7 +21,7 @@ class ApiBootstrapper {
   }
 
   private static async create(): Promise<NestExpressApplication> {
-    const app = await NestFactory.create<NestExpressApplication>(MainModule);
+    const app = await NestFactory.create<NestExpressApplication>(ApiModule);
     return app;
   }
 

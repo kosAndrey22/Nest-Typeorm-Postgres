@@ -60,6 +60,12 @@
       ],
       "@libs/types/*": [
         "libs/types/src/*"
+      ],
+      "@libs/entities": [
+        "libs/entities/src"
+      ],
+      "@libs/entities/*": [
+        "libs/entities/src/*"
       ]
     }
   },

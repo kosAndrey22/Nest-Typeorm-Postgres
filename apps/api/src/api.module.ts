@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { WebsocketLibModule } from '@libs/websocket';
 import { AuthLibModule } from '@libs/auth';
-import { DbLibModule } from '@libs/db';
+import { DbBaseLibModule } from '@libs/db';
 import { GeneralModule } from './general/general.module';
 
 @Module({
@@ -9,10 +9,10 @@ import { GeneralModule } from './general/general.module';
     GeneralModule,
 
     AuthLibModule,
-    DbLibModule,
+    DbBaseLibModule,
     WebsocketLibModule,
   ],
   controllers: [],
   providers: [],
 })
-export class MainModule { }
+export class ApiModule { }

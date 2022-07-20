@@ -6,12 +6,12 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "build:all": "concurrently \"yarn build:main\"",
-    "build:main": "nest build main",
-    "start:main": "nest start main",
-    "start:main:dev": "nest start main --watch",
-    "start:main:debug": "nest start main --debug --watch",
-    "start:main:prod": "node dist/apps/main/main",
+    "build:all": "concurrently \"yarn build:api\"",
+    "build:api": "nest build api",
+    "start:api": "nest start api",
+    "start:api:dev": "nest start api --watch",
+    "start:api:debug": "nest start api --debug --watch",
+    "start:api:prod": "node dist/apps/api/main",
     "prepare": "husky install",
     "audit": "audit-ci --config audit-ci.json",
     "type-check": "tsc --pretty --noEmit",
@@ -106,7 +106,8 @@
       "@libs/websocket": "<rootDir>/libs/websocket/src",
       "^@libs/db(|/.*)$": "<rootDir>/libs/db/src/$1",
       "^@libs/interfaces(|/.*)$": "<rootDir>/libs/interfaces/src/$1",
-      "^@libs/types(|/.*)$": "<rootDir>/libs/types/src/$1"
+      "^@libs/types(|/.*)$": "<rootDir>/libs/types/src/$1",
+      "^@libs/entities(|/.*)$": "<rootDir>/libs/entities/src/$1"
     },
     "roots": [
       "<rootDir>/apps/",
