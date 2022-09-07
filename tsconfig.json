@@ -14,63 +14,21 @@
     "baseUrl": "./",
     "incremental": true,
     "allowSyntheticDefaultImports": true,
-    "types": [
-      "jest",
-      "node"
-    ],
+    "types": ["jest", "node"],
     "paths": {
-      "@libs/dtos": [
-        "libs/dtos/src"
-      ],
-      "@libs/dtos/*": [
-        "libs/dtos/src/*"
-      ],
-      "@libs/websocket": [
-        "libs/websocket/src"
-      ],
-      "@libs/websocket/*": [
-        "libs/websocket/src/*"
-      ],
-      "@libs/constants": [
-        "libs/constants/src"
-      ],
-      "@libs/constants/*": [
-        "libs/constants/src/*"
-      ],
-      "@libs/auth": [
-        "libs/auth/src"
-      ],
-      "@libs/auth/*": [
-        "libs/auth/src/*"
-      ],
-      "@libs/db": [
-        "libs/db/src"
-      ],
-      "@libs/db/*": [
-        "libs/db/src/*"
-      ],
-      "@libs/interfaces": [
-        "libs/interfaces/src"
-      ],
-      "@libs/interfaces/*": [
-        "libs/interfaces/src/*"
-      ],
-      "@libs/types": [
-        "libs/types/src"
-      ],
-      "@libs/types/*": [
-        "libs/types/src/*"
-      ],
-      "@libs/entities": [
-        "libs/entities/src"
-      ],
-      "@libs/entities/*": [
-        "libs/entities/src/*"
-      ]
+      "@libs/dtos": ["libs/dtos/src"],
+      "@libs/dtos/*": ["libs/dtos/src/*"],
+      "@libs/constants": ["libs/constants/src"],
+      "@libs/constants/*": ["libs/constants/src/*"],
+      "@libs/auth": ["libs/auth/src"],
+      "@libs/auth/*": ["libs/auth/src/*"],
+      "@libs/db": ["libs/db/src"],
+      "@libs/db/*": ["libs/db/src/*"],
+      "@libs/interfaces": ["libs/interfaces/src"],
+      "@libs/interfaces/*": ["libs/interfaces/src/*"],
+      "@libs/types": ["libs/types/src"],
+      "@libs/types/*": ["libs/types/src/*"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "**/*.d.ts"
-  ]
+  "exclude": ["node_modules", "**/*.d.ts"]
 }

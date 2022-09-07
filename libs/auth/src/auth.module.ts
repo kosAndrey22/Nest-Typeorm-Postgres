@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { JWT } from 'config';
-import { DbBaseLibModule } from '@libs/db';
+import { DbBaseLibModule, UserEntity } from '@libs/db';
 import { INJECT_TOKENS } from '@libs/constants';
-import { UserEntity } from '@libs/entities';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
 import * as Controllers from './controllers';
@@ -27,10 +26,6 @@ import { AuthRepository } from './repositories';
       useClass: AuthRepository,
     },
   ],
-  exports: [
-    JwtStrategy,
-    JwtRefreshStrategy,
-  ],
+  exports: [JwtStrategy, JwtRefreshStrategy],
 })
-export class AuthLibModule {
-}
+export class AuthLibModule {}

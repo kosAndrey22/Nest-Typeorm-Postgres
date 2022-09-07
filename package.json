@@ -78,7 +78,8 @@
     "yarn": ">= 1.13.0"
   },
   "resolutions": {
-    "minimist": "1.2.6"
+    "minimist": "1.2.6",
+    "terser": "5.14.2"
   },
   "jest": {
     "globals": {
@@ -103,12 +104,9 @@
       "@libs/constants": "<rootDir>/libs/constants/src",
       "@libs/dtos/(.*)": "<rootDir>/libs/dtos/src/$1",
       "@libs/dtos": "<rootDir>/libs/dtos/src",
-      "@libs/websocket/(.*)": "<rootDir>/libs/websocket/src/$1",
-      "@libs/websocket": "<rootDir>/libs/websocket/src",
       "^@libs/db(|/.*)$": "<rootDir>/libs/db/src/$1",
       "^@libs/interfaces(|/.*)$": "<rootDir>/libs/interfaces/src/$1",
-      "^@libs/types(|/.*)$": "<rootDir>/libs/types/src/$1",
-      "^@libs/entities(|/.*)$": "<rootDir>/libs/entities/src/$1"
+      "^@libs/types(|/.*)$": "<rootDir>/libs/types/src/$1"
     },
     "roots": [
       "<rootDir>/apps/",

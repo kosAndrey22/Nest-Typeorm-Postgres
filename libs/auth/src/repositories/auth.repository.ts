@@ -1,21 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { IAuthRepository } from '@libs/auth';
-import { AbstractRepository } from '@libs/db';
-import { UserEntity } from '@libs/entities';
+import { UserEntity } from '@libs/db';
+import { UsersBaseRepository } from '@libs/db/repositories';
 
 @Injectable()
-export class AuthRepository extends AbstractRepository<UserEntity> implements IAuthRepository {
-
-  constructor(
-    @InjectRepository(UserEntity) protected readonly connector: Repository<UserEntity>,
-  ) {
-    super();
+export class AuthRepository
+  extends UsersBaseRepository
+  implements IAuthRepository {
+  public getUser(
+    conditions: Partial<UserEntity>,
+    relations: string[] = [],
+  ): Promise<UserEntity> {
+    return super.findOne({ where: conditions, relations });
   }
-
-  public getUser(conditions: Partial<UserEntity>, relations: string[] = []): Promise<UserEntity> {
-    return super.findOne(conditions, relations);
-  }
-
 }

@@ -1,12 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { EventsGateway } from '@libs/websocket';
+import { EventsGateway } from '../../websocket';
 
 @Injectable()
 export class GeneralService {
-  constructor(
-    private readonly eventsGateway: EventsGateway,
-  ) {
-  }
+  constructor(private readonly eventsGateway: EventsGateway) {}
 
   helloWorld(): string {
     this.eventsGateway.hello();
