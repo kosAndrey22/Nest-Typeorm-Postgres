@@ -4,7 +4,7 @@ import { EntityClassOrSchema } from '@nestjs/typeorm/dist/interfaces/entity-clas
 
 import { TypeORMConfig } from './ormconfig';
 
-export class DbBaseLibModule {
+export class DbLibModule {
   static forRoot(entities: EntityClassOrSchema[] = []): DynamicModule {
     return {
       module: this,
@@ -12,9 +12,7 @@ export class DbBaseLibModule {
         TypeOrmModule.forRoot(TypeORMConfig),
         TypeOrmModule.forFeature(entities),
       ],
-      exports: [
-        TypeOrmModule,
-      ],
+      exports: [TypeOrmModule],
     };
   }
 }

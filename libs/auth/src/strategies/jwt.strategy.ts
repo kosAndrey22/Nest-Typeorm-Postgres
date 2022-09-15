@@ -1,12 +1,14 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { JWT } from 'config';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Request } from 'express';
-import { COOKIE, INJECT_TOKENS } from '@libs/constants';
+import { InjectRepository } from '@nestjs/typeorm';
+import { COOKIE } from '@libs/constants';
 import { JwtPayload } from '../dtos';
 import { ACCESS_TOKEN_STRATEGY } from '../constants';
 import { IAuthRepository } from '../interfaces';
+import { AuthRepository } from '../repositories';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(
@@ -14,7 +16,8 @@ export class JwtStrategy extends PassportStrategy(
   ACCESS_TOKEN_STRATEGY,
 ) {
   constructor(
-    @Inject(INJECT_TOKENS.REPOSITORIES.AUTH_REPOSITORY) private readonly authRepository: IAuthRepository,
+    @InjectRepository(AuthRepository)
+    private readonly authRepository: IAuthRepository,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([

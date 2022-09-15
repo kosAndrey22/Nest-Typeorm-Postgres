@@ -4,14 +4,17 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import cookieParser from 'cookie-parser';
 import request from 'supertest';
-import { AuthLibModule, IAuthRepository } from '@libs/auth';
-import { MAX_PASSWORD_LENGTH, COOKIE, USER_ROLE, INJECT_TOKENS } from '@libs/constants';
-import { DbBaseLibModule } from '@libs/db';
+import { Connection } from 'typeorm';
+import { IAuthRepository } from '@libs/auth';
+import { MAX_PASSWORD_LENGTH, COOKIE, USER_ROLE } from '@libs/constants';
+import { AuthRepository } from '@libs/auth/repositories';
+import { AuthModule } from '../apps/api/src/auth/auth.module';
 
 describe('Auth', () => {
   let app: INestApplication;
   let server: Server;
   let authRepository: IAuthRepository;
+  let connection: Connection;
 
   const authPrefix = '/auth';
 
@@ -22,7 +25,10 @@ describe('Auth', () => {
   const tooLongPassword = 'a'.repeat(MAX_PASSWORD_LENGTH + 1);
   const validPassword = 'password';
 
-  const getAuthTokens = async (): Promise<{ accessToken: string, refreshToken: string}> => {
+  const getAuthTokens = async (): Promise<{
+    accessToken: string;
+    refreshToken: string;
+  }> => {
     const tokens = await request(server)
       .post(`${authPrefix}/sign-in`)
       .send({ login: userName, password: validPassword });
@@ -33,23 +39,20 @@ describe('Auth', () => {
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AuthLibModule, DbBaseLibModule],
-    })
-      .compile();
+      imports: [AuthModule],
+    }).compile();
 
     app = moduleRef.createNestApplication();
-    app.useGlobalPipes(
-      new ValidationPipe({ transform: true }),
-    );
+    app.useGlobalPipes(new ValidationPipe({ transform: true }));
     app.use(cookieParser());
     await app.init();
 
     server = app.getHttpServer();
-    authRepository = app.get(INJECT_TOKENS.REPOSITORIES.AUTH_REPOSITORY);
+    connection = app.get(Connection);
+    authRepository = connection.getCustomRepository(AuthRepository);
   });
 
   describe('POST sign-up', () => {
-
     it('Too short password', async () => {
       await request(server)
         .post(`${authPrefix}/sign-up`)
@@ -77,11 +80,9 @@ describe('Auth', () => {
         .send({ login: userName, password: validPassword })
         .expect(400);
     });
-
   });
 
   describe('POST sign-in', () => {
-
     it('Too short password', async () => {
       await request(server)
         .post(`${authPrefix}/sign-in`)
@@ -99,7 +100,10 @@ describe('Auth', () => {
     it('User not exists', async () => {
       await request(server)
         .post(`${authPrefix}/sign-in`)
-        .send({ login: `${userName}${userNotExistedPostfix}`, password: validPassword })
+        .send({
+          login: `${userName}${userNotExistedPostfix}`,
+          password: validPassword,
+        })
         .expect(404);
     });
 
@@ -116,16 +120,11 @@ describe('Auth', () => {
         .send({ login: userName, password: validPassword })
         .expect(200);
     });
-
   });
 
   describe('POST sign-out', () => {
-
     it('Not authorized', async () => {
-      await request(server)
-        .post(`${authPrefix}/sign-out`)
-        .send({ })
-        .expect(401);
+      await request(server).post(`${authPrefix}/sign-out`).send({}).expect(401);
     });
 
     it('OK', async () => {
@@ -137,15 +136,11 @@ describe('Auth', () => {
         .send({})
         .expect(200);
     });
-
   });
 
   describe('GET me', () => {
-
     it('Not authorized', async () => {
-      await request(server)
-        .get(`${authPrefix}/me`)
-        .expect(401);
+      await request(server).get(`${authPrefix}/me`).expect(401);
     });
 
     it('OK', async () => {
@@ -162,17 +157,14 @@ describe('Auth', () => {
         id: body.id,
         createdAt: body.createdAt,
         updatedAt: body.updatedAt,
+        refreshToken: body.refreshToken,
       });
     });
-
   });
 
   describe('GET refresh', () => {
-
     it('Not authorized', async () => {
-      await request(server)
-        .get(`${authPrefix}/refresh`)
-        .expect(401);
+      await request(server).get(`${authPrefix}/refresh`).expect(401);
     });
 
     it('OK', async () => {
@@ -183,12 +175,10 @@ describe('Auth', () => {
         .set('Cookie', [`${COOKIE.REFRESH_TOKEN}=${refreshToken}`])
         .expect(200);
     });
-
   });
 
   afterAll(async () => {
     await authRepository.delete({ login: userName });
     await app.close();
   });
-
 });

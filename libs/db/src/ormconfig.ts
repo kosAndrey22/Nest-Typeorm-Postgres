@@ -18,6 +18,7 @@ export const TypeORMConfig = {
   migrationsRun: true,
   entities,
   autoLoadModels: true,
+  autoLoadEntities: true,
   synchronize: true,
   migrations: migrations,
   logger: 'advanced-console',

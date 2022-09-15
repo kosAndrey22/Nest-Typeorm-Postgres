@@ -5,7 +5,7 @@ import { JWT } from 'config';
 import { Request } from 'express';
 import { COOKIE } from '@libs/constants';
 import { JwtPayload } from '../dtos';
-import { AuthService } from '../services';
+import { AuthLibService } from '../services';
 import { REFRESH_TOKEN_STRATEGY } from '../constants';
 
 @Injectable()
@@ -13,9 +13,7 @@ export class JwtRefreshStrategy extends PassportStrategy(
   Strategy,
   REFRESH_TOKEN_STRATEGY,
 ) {
-  constructor(
-    private readonly authService: AuthService,
-  ) {
+  constructor(private readonly authService: AuthLibService) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (req: Request): string | null => {
@@ -31,13 +29,18 @@ export class JwtRefreshStrategy extends PassportStrategy(
     });
   }
 
-  public async validate(req: Request, payload: JwtPayload): Promise<JwtPayload> {
+  public async validate(
+    req: Request,
+    payload: JwtPayload,
+  ): Promise<JwtPayload> {
     const refreshToken = req.cookies[COOKIE.REFRESH_TOKEN];
-    await this.authService.getUserIfRefreshTokenMatches(refreshToken, payload.id);
+    await this.authService.getUserIfRefreshTokenMatches(
+      refreshToken,
+      payload.id,
+    );
     return {
       id: payload.id,
       role: payload.role,
     };
   }
-
 }

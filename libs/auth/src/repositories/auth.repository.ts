@@ -1,9 +1,10 @@
+import { EntityRepository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { IAuthRepository } from '@libs/auth';
-import { UserEntity } from '@libs/db';
-import { UsersBaseRepository } from '@libs/db/repositories';
+import { UserEntity, UsersBaseRepository } from '@libs/db';
 
 @Injectable()
+@EntityRepository(UserEntity)
 export class AuthRepository
   extends UsersBaseRepository
   implements IAuthRepository {
@@ -11,6 +12,6 @@ export class AuthRepository
     conditions: Partial<UserEntity>,
     relations: string[] = [],
   ): Promise<UserEntity> {
-    return super.findOne({ where: conditions, relations });
+    return this.findOne({ where: conditions, relations });
   }
 }

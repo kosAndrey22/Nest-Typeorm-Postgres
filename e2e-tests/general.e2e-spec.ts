@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { GeneralModule } from '../../../../apps/api/src/general/general.module';
+import { GeneralModule } from '../apps/api/src/general/general.module';
 
 describe('General', () => {
   let app: INestApplication;
@@ -9,8 +9,7 @@ describe('General', () => {
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [GeneralModule],
-    })
-      .compile();
+    }).compile();
 
     app = moduleRef.createNestApplication();
     await app.init();
@@ -21,12 +20,11 @@ describe('General', () => {
       return request(app.getHttpServer())
         .get('/general')
         .expect(200)
-        .expect({});
+        .expect({ message: 'hello world' });
     });
   });
 
   afterAll(async () => {
     await app.close();
   });
-
 });
