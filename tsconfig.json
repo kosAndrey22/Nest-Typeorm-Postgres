@@ -26,8 +26,10 @@
       "@libs/db/*": ["libs/db/src/*"],
       "@libs/interfaces": ["libs/interfaces/src"],
       "@libs/interfaces/*": ["libs/interfaces/src/*"],
-      "@libs/types": ["libs/types/src"],
-      "@libs/types/*": ["libs/types/src/*"]
+      "@libs/value-objects": ["libs/value-objects/src"],
+      "@libs/value-objects/*": ["libs/value-objects/src/*"],
+      "@libs/helpers": ["libs/helpers/src"],
+      "@libs/helpers/*": ["libs/helpers/src/*"]
     }
   },
   "exclude": ["node_modules", "**/*.d.ts"]

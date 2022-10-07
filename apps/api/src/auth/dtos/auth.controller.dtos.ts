@@ -1,12 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 import { Expose } from 'class-transformer';
-import { Matches, Length, IsDefined, IsString } from 'class-validator';
-import {
-  MIN_PASSWORD_LENGTH,
-  MAX_PASSWORD_LENGTH,
-  PASSWORD_PATTERN,
-} from '@libs/constants';
+import { IsDefined, IsString } from 'class-validator';
 import { ConstructableDTO } from '@libs/dtos';
 import { UserDTO } from './auth.dtos';
 
@@ -27,13 +22,7 @@ export class SignInBodyDTO {
 
   @Expose()
   @IsDefined()
-  @Length(MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH)
-  @Matches(PASSWORD_PATTERN)
-  @ApiProperty({
-    minLength: MIN_PASSWORD_LENGTH,
-    maxLength: MAX_PASSWORD_LENGTH,
-    pattern: PASSWORD_PATTERN.toString(),
-  })
+  @ApiProperty()
   password: string;
 }
 
@@ -48,13 +37,7 @@ export class SignUpBodyDTO {
 
   @Expose()
   @IsDefined()
-  @Length(MIN_PASSWORD_LENGTH, MAX_PASSWORD_LENGTH)
-  @Matches(PASSWORD_PATTERN)
-  @ApiProperty({
-    minLength: MIN_PASSWORD_LENGTH,
-    maxLength: MAX_PASSWORD_LENGTH,
-    pattern: PASSWORD_PATTERN.toString(),
-  })
+  @ApiProperty()
   password: string;
 }
 

@@ -9,7 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ERRORS, USER_ROLE } from '@libs/constants';
 import { IUserEntity } from '@libs/interfaces';
-import { compare, getHashByPassword, hashValue } from '../helpers';
+import { User } from '@libs/value-objects';
 import { JwtPayload } from '../dtos';
 import { IAuthRepository } from '../interfaces';
 import { AuthRepository } from '../repositories';
@@ -46,7 +46,7 @@ export class AuthLibService {
   ): Promise<IUserEntity | null> {
     const user = await this.getUserOrFail({ id });
 
-    const isRefreshTokenMatching = await compare(
+    const isRefreshTokenMatching = await User.compareRefreshTokens(
       refreshToken,
       user.refreshToken,
     );
@@ -67,7 +67,7 @@ export class AuthLibService {
     refreshToken: string,
     userId: number,
   ): Promise<void> {
-    const hashedToken = await hashValue(refreshToken, 10);
+    const hashedToken = await User.getHashedRefreshToken(refreshToken);
     await this.authRepository.update(
       { id: userId },
       {
@@ -79,8 +79,8 @@ export class AuthLibService {
   public async signIn(login: string, password: string): Promise<IUserEntity> {
     const user = await this.getUserOrFail({ login });
 
-    const isPasswordCorrect = await compare(password, user.password);
-    if (!isPasswordCorrect) {
+    const passwordCorrect = await User.comparePassword(password, user.password);
+    if (!passwordCorrect) {
       throw new UnauthorizedException([
         { field: 'password', message: ERRORS.INVALID_PASSWORD },
       ]);
@@ -96,7 +96,13 @@ export class AuthLibService {
         { field: 'login', message: ERRORS.LOGIN_ALREADY_IN_USE },
       ]);
     }
-    const passwordHash = await getHashByPassword(password);
+    const passwordValid = User.validatePassword(password);
+    if (!passwordValid) {
+      throw new BadRequestException([
+        { field: 'password', message: ERRORS.INVALID_PASSWORD },
+      ]);
+    }
+    const passwordHash = await User.getHashedPassword(password);
     await this.authRepository.save({
       login,
       role: USER_ROLE.USER,

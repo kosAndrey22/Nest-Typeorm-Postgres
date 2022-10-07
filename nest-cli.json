@@ -70,13 +70,22 @@
         "tsConfigPath": "libs/interfaces/tsconfig.lib.json"
       }
     },
-    "types": {
+    "value-objects": {
       "type": "library",
-      "root": "libs/types",
+      "root": "libs/value-objects",
       "entryFile": "index",
-      "sourceRoot": "libs/types/src",
+      "sourceRoot": "libs/value-objects/src",
       "compilerOptions": {
-        "tsConfigPath": "libs/types/tsconfig.lib.json"
+        "tsConfigPath": "libs/value-objects/tsconfig.lib.json"
+      }
+    },
+    "helpers": {
+      "type": "library",
+      "root": "libs/helpers",
+      "entryFile": "index",
+      "sourceRoot": "libs/helpers/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/helpers/tsconfig.lib.json"
       }
     }
   }

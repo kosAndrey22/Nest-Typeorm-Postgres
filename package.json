@@ -106,7 +106,8 @@
       "@libs/dtos": "<rootDir>/libs/dtos/src",
       "^@libs/db(|/.*)$": "<rootDir>/libs/db/src/$1",
       "^@libs/interfaces(|/.*)$": "<rootDir>/libs/interfaces/src/$1",
-      "^@libs/types(|/.*)$": "<rootDir>/libs/types/src/$1"
+      "^@libs/value-objects(|/.*)$": "<rootDir>/libs/value-objects/src/$1",
+      "^@libs/helpers(|/.*)$": "<rootDir>/libs/helpers/src/$1"
     },
     "roots": [
       "<rootDir>/apps/",

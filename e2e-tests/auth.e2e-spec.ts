@@ -9,14 +9,13 @@ import { IAuthRepository } from '@libs/auth';
 import { MAX_PASSWORD_LENGTH, COOKIE, USER_ROLE } from '@libs/constants';
 import { AuthRepository } from '@libs/auth/repositories';
 import { AuthModule } from '../apps/api/src/auth/auth.module';
+import { PREFIXES, ROUTES } from '../apps/api/src/routes';
 
 describe('Auth', () => {
   let app: INestApplication;
   let server: Server;
   let authRepository: IAuthRepository;
   let connection: Connection;
-
-  const authPrefix = '/auth';
 
   const userName = 'user';
   const userNotExistedPostfix = '$%@$EFFE@F@';
@@ -30,7 +29,7 @@ describe('Auth', () => {
     refreshToken: string;
   }> => {
     const tokens = await request(server)
-      .post(`${authPrefix}/sign-in`)
+      .post(`/${PREFIXES.AUTH}/${ROUTES.AUTH.SIGN_IN}`)
       .send({ login: userName, password: validPassword });
 
     const { body } = tokens;
@@ -55,51 +54,37 @@ describe('Auth', () => {
   describe('POST sign-up', () => {
     it('Too short password', async () => {
       await request(server)
-        .post(`${authPrefix}/sign-up`)
+        .post(`/${PREFIXES.AUTH}/${ROUTES.AUTH.SIGN_UP}`)
         .send({ login: userName, password: tooShortPassword })
         .expect(400);
     });
 
     it('Too long password', async () => {
       await request(server)
-        .post(`${authPrefix}/sign-up`)
+        .post(`/${PREFIXES.AUTH}/${ROUTES.AUTH.SIGN_UP}`)
         .send({ login: userName, password: tooLongPassword })
         .expect(400);
     });
 
     it('OK', async () => {
       await request(server)
-        .post(`${authPrefix}/sign-up`)
+        .post(`/${PREFIXES.AUTH}/${ROUTES.AUTH.SIGN_UP}`)
         .send({ login: userName, password: validPassword })
         .expect(200);
     });
 
     it('Already in use', async () => {
       await request(server)
-        .post(`${authPrefix}/sign-up`)
+        .post(`/${PREFIXES.AUTH}/${ROUTES.AUTH.SIGN_UP}`)
         .send({ login: userName, password: validPassword })
         .expect(400);
     });
   });
 
   describe('POST sign-in', () => {
-    it('Too short password', async () => {
-      await request(server)
-        .post(`${authPrefix}/sign-in`)
-        .send({ login: userName, password: tooShortPassword })
-        .expect(400);
-    });
-
-    it('Too long password', async () => {
-      await request(server)
-        .post(`${authPrefix}/sign-in`)
-        .send({ login: userName, password: tooLongPassword })
-        .expect(400);
-    });
-
     it('User not exists', async () => {
       await request(server)
-        .post(`${authPrefix}/sign-in`)
+        .post(`/${PREFIXES.AUTH}/${ROUTES.AUTH.SIGN_IN}`)
         .send({
           login: `${userName}${userNotExistedPostfix}`,
           password: validPassword,
@@ -109,14 +94,14 @@ describe('Auth', () => {
 
     it('Incorrect password', async () => {
       await request(server)
-        .post(`${authPrefix}/sign-in`)
+        .post(`/${PREFIXES.AUTH}/${ROUTES.AUTH.SIGN_IN}`)
         .send({ login: userName, password: `${validPassword}1` })
         .expect(401);
     });
 
     it('OK', async () => {
       await request(server)
-        .post(`${authPrefix}/sign-in`)
+        .post(`/${PREFIXES.AUTH}/${ROUTES.AUTH.SIGN_IN}`)
         .send({ login: userName, password: validPassword })
         .expect(200);
     });
@@ -124,14 +109,17 @@ describe('Auth', () => {
 
   describe('POST sign-out', () => {
     it('Not authorized', async () => {
-      await request(server).post(`${authPrefix}/sign-out`).send({}).expect(401);
+      await request(server)
+        .post(`/${PREFIXES.AUTH}/${ROUTES.AUTH.SIGN_OUT}`)
+        .send({})
+        .expect(401);
     });
 
     it('OK', async () => {
       const { accessToken } = await getAuthTokens();
 
       await request(server)
-        .post(`${authPrefix}/sign-out`)
+        .post(`/${PREFIXES.AUTH}/${ROUTES.AUTH.SIGN_OUT}`)
         .set(COOKIE.ACCESS_TOKEN, accessToken)
         .send({})
         .expect(200);
@@ -140,14 +128,16 @@ describe('Auth', () => {
 
   describe('GET me', () => {
     it('Not authorized', async () => {
-      await request(server).get(`${authPrefix}/me`).expect(401);
+      await request(server)
+        .get(`/${PREFIXES.AUTH}/${ROUTES.AUTH.GET_ME}`)
+        .expect(401);
     });
 
     it('OK', async () => {
       const { accessToken } = await getAuthTokens();
 
       const res = await request(server)
-        .get(`${authPrefix}/me`)
+        .get(`/${PREFIXES.AUTH}/${ROUTES.AUTH.GET_ME}`)
         .set(COOKIE.ACCESS_TOKEN, accessToken)
         .expect(200);
       const { body } = res;
@@ -164,14 +154,16 @@ describe('Auth', () => {
 
   describe('GET refresh', () => {
     it('Not authorized', async () => {
-      await request(server).get(`${authPrefix}/refresh`).expect(401);
+      await request(server)
+        .get(`/${PREFIXES.AUTH}/${ROUTES.AUTH.REFRESH_TOKEN}`)
+        .expect(401);
     });
 
     it('OK', async () => {
       const { refreshToken } = await getAuthTokens();
 
       await request(server)
-        .get(`${authPrefix}/refresh`)
+        .get(`/${PREFIXES.AUTH}/${ROUTES.AUTH.REFRESH_TOKEN}`)
         .set('Cookie', [`${COOKIE.REFRESH_TOKEN}=${refreshToken}`])
         .expect(200);
     });
