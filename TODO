@@ -1,3 +1,2 @@
-1. Move business logic from dtos
-2. Manage HTTP errors in controller by decorator.
-3. Apply events gateway pattern
+1. Manage HTTP errors in controller by decorator.
+2. Apply events gateway pattern
