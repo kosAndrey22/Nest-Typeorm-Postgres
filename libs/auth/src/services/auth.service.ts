@@ -2,9 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { JWT } from 'config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ERRORS, USER_ROLE } from '@libs/constants';
+import {
+  ERRORS,
+  PASSWORD_SALT_ROUNDS,
+  REFRESH_TOKEN_SALT_ROUNDS,
+  USER_ROLE,
+} from '@libs/constants';
 import { IUserEntity } from '@libs/interfaces';
-import { User } from '@libs/value-objects';
+import { UserValidator } from '@libs/validators';
+import { compareValues, hashValue } from '@libs/helpers';
 import { JwtPayload } from '../dtos';
 import { IAuthRepository } from '../interfaces';
 import { AuthRepository } from '../repositories';
@@ -41,7 +47,7 @@ export class AuthLibService {
   ): Promise<IUserEntity | null> {
     const user = await this.getUserOrFail({ id });
 
-    const isRefreshTokenMatching = await User.compareRefreshTokens(
+    const isRefreshTokenMatching = await this.compareRefreshTokens(
       refreshToken,
       user.refreshToken,
     );
@@ -62,7 +68,7 @@ export class AuthLibService {
     refreshToken: string,
     userId: number,
   ): Promise<void> {
-    const hashedToken = await User.getHashedRefreshToken(refreshToken);
+    const hashedToken = await this.getHashedRefreshToken(refreshToken);
     await this.authRepository.update(
       { id: userId },
       {
@@ -74,7 +80,7 @@ export class AuthLibService {
   public async signIn(login: string, password: string): Promise<IUserEntity> {
     const user = await this.getUserOrFail({ login });
 
-    const passwordCorrect = await User.comparePassword(password, user.password);
+    const passwordCorrect = await this.comparePassword(password, user.password);
     if (!passwordCorrect) {
       throw new Error(ERRORS.INCORRECT_PASSWORD);
     }
@@ -86,17 +92,39 @@ export class AuthLibService {
     if (userByLogin) {
       throw new Error(ERRORS.LOGIN_ALREADY_IN_USE);
     }
-    const passwordValid = User.validatePassword(password);
+    const passwordValid = UserValidator.validatePassword(password);
     if (!passwordValid) {
       throw new Error(ERRORS.INVALID_PASSWORD);
     }
-    const passwordHash = await User.getHashedPassword(password);
+    const passwordHash = await this.getHashedPassword(password);
     await this.authRepository.save({
       login,
       role: USER_ROLE.USER,
       password: passwordHash,
     });
   }
+
+  private comparePassword = (
+    password: string,
+    passwordHash: string,
+  ): Promise<boolean> => {
+    return compareValues(password, passwordHash);
+  };
+
+  private compareRefreshTokens = (
+    token: string,
+    tokeHash: string,
+  ): Promise<boolean> => {
+    return compareValues(token, tokeHash);
+  };
+
+  private getHashedPassword = (password: string): Promise<string> => {
+    return hashValue(password, PASSWORD_SALT_ROUNDS);
+  };
+
+  private getHashedRefreshToken = (token: string): Promise<string> => {
+    return hashValue(token, REFRESH_TOKEN_SALT_ROUNDS);
+  };
 
   private async getUserOrFail(
     conditions: Partial<IUserEntity>,

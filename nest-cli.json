@@ -70,13 +70,13 @@
         "tsConfigPath": "libs/interfaces/tsconfig.lib.json"
       }
     },
-    "value-objects": {
+    "validators": {
       "type": "library",
-      "root": "libs/value-objects",
+      "root": "libs/validators",
       "entryFile": "index",
-      "sourceRoot": "libs/value-objects/src",
+      "sourceRoot": "libs/validators/src",
       "compilerOptions": {
-        "tsConfigPath": "libs/value-objects/tsconfig.lib.json"
+        "tsConfigPath": "libs/validators/tsconfig.lib.json"
       }
     },
     "helpers": {

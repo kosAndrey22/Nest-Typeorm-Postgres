@@ -26,8 +26,8 @@
       "@libs/db/*": ["libs/db/src/*"],
       "@libs/interfaces": ["libs/interfaces/src"],
       "@libs/interfaces/*": ["libs/interfaces/src/*"],
-      "@libs/value-objects": ["libs/value-objects/src"],
-      "@libs/value-objects/*": ["libs/value-objects/src/*"],
+      "@libs/validators": ["libs/validators/src"],
+      "@libs/validators/*": ["libs/validators/src/*"],
       "@libs/helpers": ["libs/helpers/src"],
       "@libs/helpers/*": ["libs/helpers/src/*"]
     }
