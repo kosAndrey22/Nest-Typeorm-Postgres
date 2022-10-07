@@ -1,9 +1,4 @@
-import {
-  Injectable,
-  BadRequestException,
-  UnauthorizedException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JWT } from 'config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -81,26 +76,19 @@ export class AuthLibService {
 
     const passwordCorrect = await User.comparePassword(password, user.password);
     if (!passwordCorrect) {
-      throw new UnauthorizedException([
-        { field: 'password', message: ERRORS.INVALID_PASSWORD },
-      ]);
+      throw new Error(ERRORS.INCORRECT_PASSWORD);
     }
-
     return user;
   }
 
   public async signUp(login: string, password: string): Promise<void> {
     const userByLogin = await this.authRepository.getUser({ login });
     if (userByLogin) {
-      throw new BadRequestException([
-        { field: 'login', message: ERRORS.LOGIN_ALREADY_IN_USE },
-      ]);
+      throw new Error(ERRORS.LOGIN_ALREADY_IN_USE);
     }
     const passwordValid = User.validatePassword(password);
     if (!passwordValid) {
-      throw new BadRequestException([
-        { field: 'password', message: ERRORS.INVALID_PASSWORD },
-      ]);
+      throw new Error(ERRORS.INVALID_PASSWORD);
     }
     const passwordHash = await User.getHashedPassword(password);
     await this.authRepository.save({
@@ -116,9 +104,7 @@ export class AuthLibService {
   ): Promise<IUserEntity> {
     const user = await this.authRepository.getUser(conditions, relations);
     if (!user) {
-      throw new NotFoundException([
-        { field: '', message: ERRORS.USER_NOT_FOUND },
-      ]);
+      throw new Error(ERRORS.USER_NOT_FOUND);
     }
     return user;
   }

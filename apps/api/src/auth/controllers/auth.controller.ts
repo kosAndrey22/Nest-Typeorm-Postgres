@@ -45,7 +45,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: MeResponseDTO })
   public async me(@Req() req: RequestWithUser): Promise<MeResponseDTO> {
-    return new MeResponseDTO(await this.authService.getMe(req.user.id));
+    return new MeResponseDTO(await this.authService.getMeOrFail(req.user.id));
   }
 
   @Get(ROUTES.AUTH.REFRESH_TOKEN)
@@ -69,7 +69,7 @@ export class AuthController {
     @Body() { login, password }: SignUpBodyDTO,
     @Res() res: Response,
   ): Promise<void> {
-    await this.authService.signUp(login, password);
+    await this.authService.signUpOrFail(login, password);
 
     const { accessToken, refreshToken } = await this.authenticate(res, {
       login,
@@ -111,7 +111,7 @@ export class AuthController {
     res: Response,
     { login, password }: Pick<IUserEntity, 'login' | 'password'>,
   ): Promise<JwtAuthDTO> {
-    const { id, role } = await this.authService.signIn(login, password);
+    const { id, role } = await this.authService.signInOrFail(login, password);
     const accessToken = this.authService.generateAccessToken({ id, role });
     const refreshToken = this.authService.generateRefreshToken({ id, role });
 
