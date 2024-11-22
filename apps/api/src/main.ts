@@ -9,7 +9,6 @@ import * as packageJson from '../../../package.json';
 import { ApiModule } from './api.module';
 
 class ApiBootstrapper {
-
   public static async bootstrap(): Promise<void> {
     const app = await ApiBootstrapper.create();
     ApiBootstrapper.setupCors(app);
@@ -33,7 +32,13 @@ class ApiBootstrapper {
         },
         credentials: true,
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-        headers: ['x-user', 'X-Signature', 'accept', 'content-type', 'authorization'],
+        headers: [
+          'x-user',
+          'X-Signature',
+          'accept',
+          'content-type',
+          'authorization',
+        ],
       };
 
       app.use(cors(corsOptions));
@@ -54,9 +59,7 @@ class ApiBootstrapper {
   }
 
   private static setupPipes(app: NestExpressApplication): void {
-    app.useGlobalPipes(
-      new ValidationPipe({ transform: true }),
-    );
+    app.useGlobalPipes(new ValidationPipe({ transform: true }));
   }
 
   private static setupSwagger(app: NestExpressApplication): void {
@@ -67,7 +70,7 @@ class ApiBootstrapper {
       .addBearerAuth()
       .build();
     const document = SwaggerModule.createDocument(app, options);
-    SwaggerModule.setup('app', app, document, {
+    SwaggerModule.setup('api', app, document, {
       swaggerOptions: {
         persistAuthorization: true,
       },
@@ -80,7 +83,6 @@ class ApiBootstrapper {
     await app.startAllMicroservices();
     await app.listen(port);
   }
-
 }
 
 ApiBootstrapper.bootstrap();

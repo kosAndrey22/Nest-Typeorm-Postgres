@@ -1,11 +1,8 @@
 import { Module } from '@nestjs/common';
-import { DbLibModule } from '@libs/db';
-import { GeneralModule } from './general/general.module';
-import { WebsocketModule } from './websocket';
-import { AuthModule } from './auth';
+import { HelloModule } from './hello/hello.module';
 
 @Module({
-  imports: [GeneralModule, AuthModule, WebsocketModule, DbLibModule],
+  imports: [HelloModule],
   controllers: [],
   providers: [],
 })

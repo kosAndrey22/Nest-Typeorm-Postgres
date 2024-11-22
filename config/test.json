@@ -1,6 +1,0 @@
-{
-  "POSTGRES": {
-    "DB": "postgres"
-  },
-  "NODE_ENV": "test"
-}

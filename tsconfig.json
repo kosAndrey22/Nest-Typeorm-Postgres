@@ -14,22 +14,16 @@
     "baseUrl": "./",
     "incremental": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["jest", "node"],
+    "types": ["node"],
     "paths": {
-      "@libs/dtos": ["libs/dtos/src"],
-      "@libs/dtos/*": ["libs/dtos/src/*"],
       "@libs/constants": ["libs/constants/src"],
       "@libs/constants/*": ["libs/constants/src/*"],
-      "@libs/auth": ["libs/auth/src"],
-      "@libs/auth/*": ["libs/auth/src/*"],
       "@libs/db": ["libs/db/src"],
       "@libs/db/*": ["libs/db/src/*"],
+      "@libs/dtos": ["libs/dtos/src"],
+      "@libs/dtos/*": ["libs/dtos/src/*"],
       "@libs/interfaces": ["libs/interfaces/src"],
-      "@libs/interfaces/*": ["libs/interfaces/src/*"],
-      "@libs/validators": ["libs/validators/src"],
-      "@libs/validators/*": ["libs/validators/src/*"],
-      "@libs/helpers": ["libs/helpers/src"],
-      "@libs/helpers/*": ["libs/helpers/src/*"]
+      "@libs/interfaces/*": ["libs/interfaces/src/*"]
     }
   },
   "exclude": ["node_modules", "**/*.d.ts"]

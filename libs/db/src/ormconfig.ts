@@ -1,7 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { POSTGRES } from 'config';
 import * as Migrations from './migrations';
-import * as Entities from './';
+import * as Entities from './entities';
 
 const entities = Object.values(Entities);
 const migrations = Object.values(Migrations);

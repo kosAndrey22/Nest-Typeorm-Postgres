@@ -4,12 +4,6 @@
   "COOKIES_OPTIONS": {
     "SAME_SITE": "none"
   },
-  "JWT": {
-    "ACCESS_TOKEN_EXPIRATION": "30m",
-    "ACCESS_TOKEN_SECRET_KEY": "JWT_ACCESS_SECRET_KEY",
-    "REFRESH_TOKEN_EXPIRATION": "30d",
-    "REFRESH_TOKEN_SECRET_KEY": "JWT_REFRESH_SECRET_KEY"
-  },
   "POSTGRES": {
     "HOST": "localhost",
     "USERNAME": "postgres",

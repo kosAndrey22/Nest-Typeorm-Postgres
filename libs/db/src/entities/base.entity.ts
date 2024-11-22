@@ -3,9 +3,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IBaseEntity } from '@libs/interfaces';
 
-export class BaseEntity implements IBaseEntity {
+export class BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

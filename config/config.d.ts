@@ -1,17 +1,9 @@
 declare module 'config' {
-
   export const CORS: boolean;
   export const DEVELOPMENT: boolean;
 
   export const COOKIES_OPTIONS: {
     readonly SAME_SITE: boolean | 'lax' | 'strict' | 'none';
-  };
-
-  export const JWT: {
-    readonly ACCESS_TOKEN_EXPIRATION: string | number;
-    readonly ACCESS_TOKEN_SECRET_KEY: string;
-    readonly REFRESH_TOKEN_EXPIRATION: string | number;
-    readonly REFRESH_TOKEN_SECRET_KEY: string;
   };
 
   export const POSTGRES: {
@@ -28,5 +20,4 @@ declare module 'config' {
   export const API: {
     readonly PORT: number;
   };
-
 }

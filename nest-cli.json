@@ -43,15 +43,6 @@
         "tsConfigPath": "libs/constants/tsconfig.lib.json"
       }
     },
-    "auth": {
-      "type": "library",
-      "root": "libs/auth",
-      "entryFile": "index",
-      "sourceRoot": "libs/auth/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/auth/tsconfig.lib.json"
-      }
-    },
     "db": {
       "type": "library",
       "root": "libs/db",
@@ -68,24 +59,6 @@
       "sourceRoot": "libs/interfaces/src",
       "compilerOptions": {
         "tsConfigPath": "libs/interfaces/tsconfig.lib.json"
-      }
-    },
-    "validators": {
-      "type": "library",
-      "root": "libs/validators",
-      "entryFile": "index",
-      "sourceRoot": "libs/validators/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/validators/tsconfig.lib.json"
-      }
-    },
-    "helpers": {
-      "type": "library",
-      "root": "libs/helpers",
-      "entryFile": "index",
-      "sourceRoot": "libs/helpers/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/helpers/tsconfig.lib.json"
       }
     }
   }
